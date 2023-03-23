@@ -1,13 +1,18 @@
 package assistant.front.learningjavaassistantfrontend;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class RegisterWindowController {
+public class RegisterWindowController implements Controller {
     private Service service = new Service();
+    private ViewFactory viewFactory;
+
+    RegisterWindowController(ViewFactory viewFactory) {
+        this.viewFactory = viewFactory;
+    }
 
     @FXML
     private Label errorLabel;
@@ -21,11 +26,14 @@ public class RegisterWindowController {
     @FXML
     private TextField usernameField;
 
+    private String FXMLName = "register-window.fxml";
+
     @FXML
     void onLoginClick() {
         try {
             service.login(usernameField.getText(), passwordField.getText());
-            System.out.println("Zalogowano pomyślnie, ciąg dalszy scenariusza.");
+            ((Stage) errorLabel.getScene().getWindow()).close();
+            viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());
         }
@@ -35,10 +43,14 @@ public class RegisterWindowController {
     void onRegisterClick() {
         try {
             service.register(usernameField.getText(), passwordField.getText());
-            System.out.println("Zarejestrowano pomyślnie, ciąg dalszy scenariusza.");
+            ((Stage) errorLabel.getScene().getWindow()).close();
+            viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());
         }
     }
 
+    public String getFXMLName() {
+        return FXMLName;
+    }
 }
