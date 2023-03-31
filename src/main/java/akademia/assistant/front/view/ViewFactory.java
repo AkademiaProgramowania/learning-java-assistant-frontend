@@ -3,6 +3,7 @@ package akademia.assistant.front.view;
 import akademia.assistant.front.controller.MainWindowController;
 import akademia.assistant.front.controller.RegisterWindowController;
 import akademia.assistant.front.controller.Controller;
+import akademia.assistant.front.service.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,13 +13,15 @@ import java.io.IOException;
 
 public class ViewFactory {
 
+    private Service service = new Service();
+
     public void showRegisterWindow() {
-        Controller controller = new RegisterWindowController(this);
+        Controller controller = new RegisterWindowController(service, this);
         showWindow(controller);
     }
 
     public void showMainWindow() {
-        Controller controller = new MainWindowController(this);
+        Controller controller = new MainWindowController(service, this);
         showWindow(controller);
     }
 

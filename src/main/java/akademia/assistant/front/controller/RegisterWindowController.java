@@ -9,12 +9,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RegisterWindowController implements Controller {
-    private Service service = new Service();
-    private ViewFactory viewFactory;
+public class RegisterWindowController extends Controller {
 
-    public RegisterWindowController(ViewFactory viewFactory) {
-        this.viewFactory = viewFactory;
+    public RegisterWindowController(Service service, ViewFactory viewFactory) {
+        super(service, viewFactory);
     }
 
     @FXML

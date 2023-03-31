@@ -5,12 +5,10 @@ import akademia.assistant.front.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class MainWindowController implements Controller {
-    private Service service = new Service();
-    private ViewFactory viewFactory;
+public class MainWindowController extends Controller {
 
-    public MainWindowController(ViewFactory viewFactory) {
-        this.viewFactory = viewFactory;
+    public MainWindowController(Service service, ViewFactory viewFactory) {
+        super(service, viewFactory);
     }
 
     private String FXMLName = "main-window.fxml";
