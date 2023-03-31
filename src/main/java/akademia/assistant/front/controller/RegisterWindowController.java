@@ -33,7 +33,7 @@ public class RegisterWindowController extends Controller {
     void onLoginClick() {
         try {
             service.login(usernameField.getText(), passwordField.getText());
-            ((Stage) errorLabel.getScene().getWindow()).close();
+            closeWindow();
             viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());
@@ -44,7 +44,7 @@ public class RegisterWindowController extends Controller {
     void onRegisterClick() {
         try {
             service.register(usernameField.getText(), passwordField.getText());
-            ((Stage) errorLabel.getScene().getWindow()).close();
+            closeWindow();
             viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());

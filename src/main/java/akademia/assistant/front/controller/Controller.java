@@ -13,4 +13,8 @@ public abstract class Controller {
     }
 
     public abstract String getFXMLName();
+
+    public void closeWindow() {
+        viewFactory.closeWindow(this);
+    }
 }

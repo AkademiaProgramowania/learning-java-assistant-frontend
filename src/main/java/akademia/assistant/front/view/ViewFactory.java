@@ -10,10 +10,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewFactory {
 
     private Service service = new Service();
+    private Map<Controller, Stage> stages = new HashMap<>();
 
     public void showRegisterWindow() {
         Controller controller = new RegisterWindowController(service, this);
@@ -40,5 +43,11 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        stages.put(controller, stage);
+    }
+
+    public void closeWindow(Controller controller) {
+        Stage stage = stages.remove(controller);
+        stage.close();
     }
 }
