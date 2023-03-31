@@ -1,5 +1,6 @@
 package assistant.front.learningjavaassistantfrontend;
 
+import assistant.front.learningjavaassistantfrontend.view.ViewFactory;
 import javafx.application.Application;
 
 import javafx.stage.Stage;

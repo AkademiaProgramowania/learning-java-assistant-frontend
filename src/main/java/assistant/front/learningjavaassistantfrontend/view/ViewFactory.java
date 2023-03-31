@@ -1,5 +1,8 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.view;
 
+import assistant.front.learningjavaassistantfrontend.controller.Controller;
+import assistant.front.learningjavaassistantfrontend.controller.MainWindowController;
+import assistant.front.learningjavaassistantfrontend.controller.RegisterWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

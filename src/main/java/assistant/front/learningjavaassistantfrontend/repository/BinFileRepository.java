@@ -1,4 +1,7 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.repository;
+
+import assistant.front.learningjavaassistantfrontend.model.Category;
+import assistant.front.learningjavaassistantfrontend.model.User;
 
 import java.io.*;
 import java.util.ArrayList;

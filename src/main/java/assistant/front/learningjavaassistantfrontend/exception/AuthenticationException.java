@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.exception;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message) {

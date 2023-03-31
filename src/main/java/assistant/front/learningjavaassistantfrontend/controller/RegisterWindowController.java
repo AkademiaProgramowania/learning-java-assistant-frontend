@@ -1,5 +1,8 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.controller;
 
+import assistant.front.learningjavaassistantfrontend.exception.AuthenticationException;
+import assistant.front.learningjavaassistantfrontend.service.Service;
+import assistant.front.learningjavaassistantfrontend.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,7 +13,7 @@ public class RegisterWindowController implements Controller {
     private Service service = new Service();
     private ViewFactory viewFactory;
 
-    RegisterWindowController(ViewFactory viewFactory) {
+    public RegisterWindowController(ViewFactory viewFactory) {
         this.viewFactory = viewFactory;
     }
 

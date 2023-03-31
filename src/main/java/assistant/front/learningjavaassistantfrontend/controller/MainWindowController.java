@@ -1,5 +1,7 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.controller;
 
+import assistant.front.learningjavaassistantfrontend.service.Service;
+import assistant.front.learningjavaassistantfrontend.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -7,7 +9,7 @@ public class MainWindowController implements Controller {
     private Service service = new Service();
     private ViewFactory viewFactory;
 
-    MainWindowController(ViewFactory viewFactory) {
+    public MainWindowController(ViewFactory viewFactory) {
         this.viewFactory = viewFactory;
     }
 

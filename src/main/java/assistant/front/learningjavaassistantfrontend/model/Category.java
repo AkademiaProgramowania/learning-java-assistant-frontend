@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend;
+package assistant.front.learningjavaassistantfrontend.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +7,7 @@ public class Category implements Serializable {
     private String categoryName = "";
     private List<Problem> problems;
 
-    Category(String categoryName, List<Problem> problems) {
+    public Category(String categoryName, List<Problem> problems) {
         this.categoryName = categoryName;
         this.problems = problems;
     }
