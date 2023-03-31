@@ -1,11 +1,11 @@
-package assistant.front.learningjavaassistantfrontend.service;
+package akademia.assistant.front.service;
 
-import assistant.front.learningjavaassistantfrontend.exception.AuthenticationException;
-import assistant.front.learningjavaassistantfrontend.model.Category;
-import assistant.front.learningjavaassistantfrontend.model.Problem;
-import assistant.front.learningjavaassistantfrontend.model.User;
-import assistant.front.learningjavaassistantfrontend.repository.BinFileRepository;
-import assistant.front.learningjavaassistantfrontend.repository.Repository;
+import akademia.assistant.front.model.User;
+import akademia.assistant.front.exception.AuthenticationException;
+import akademia.assistant.front.model.Category;
+import akademia.assistant.front.model.Problem;
+import akademia.assistant.front.repository.BinFileRepository;
+import akademia.assistant.front.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

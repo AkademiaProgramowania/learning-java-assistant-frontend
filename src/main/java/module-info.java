@@ -3,18 +3,18 @@ module assistant.front.learningjavaassistantfrontend {
     requires javafx.fxml;
 
 
-    opens assistant.front.learningjavaassistantfrontend to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend;
-    exports assistant.front.learningjavaassistantfrontend.controller;
-    opens assistant.front.learningjavaassistantfrontend.controller to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend.model;
-    opens assistant.front.learningjavaassistantfrontend.model to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend.repository;
-    opens assistant.front.learningjavaassistantfrontend.repository to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend.exception;
-    opens assistant.front.learningjavaassistantfrontend.exception to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend.service;
-    opens assistant.front.learningjavaassistantfrontend.service to javafx.fxml;
-    exports assistant.front.learningjavaassistantfrontend.view;
-    opens assistant.front.learningjavaassistantfrontend.view to javafx.fxml;
+    opens akademia.assistant.front to javafx.fxml;
+    exports akademia.assistant.front;
+    exports akademia.assistant.front.controller;
+    opens akademia.assistant.front.controller to javafx.fxml;
+    exports akademia.assistant.front.model;
+    opens akademia.assistant.front.model to javafx.fxml;
+    exports akademia.assistant.front.repository;
+    opens akademia.assistant.front.repository to javafx.fxml;
+    exports akademia.assistant.front.exception;
+    opens akademia.assistant.front.exception to javafx.fxml;
+    exports akademia.assistant.front.service;
+    opens akademia.assistant.front.service to javafx.fxml;
+    exports akademia.assistant.front.view;
+    opens akademia.assistant.front.view to javafx.fxml;
 }

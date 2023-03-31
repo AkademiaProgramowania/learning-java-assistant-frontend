@@ -1,8 +1,8 @@
-package assistant.front.learningjavaassistantfrontend.controller;
+package akademia.assistant.front.controller;
 
-import assistant.front.learningjavaassistantfrontend.exception.AuthenticationException;
-import assistant.front.learningjavaassistantfrontend.service.Service;
-import assistant.front.learningjavaassistantfrontend.view.ViewFactory;
+import akademia.assistant.front.exception.AuthenticationException;
+import akademia.assistant.front.service.Service;
+import akademia.assistant.front.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;

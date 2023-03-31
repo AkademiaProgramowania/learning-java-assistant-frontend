@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend.model;
+package akademia.assistant.front.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
