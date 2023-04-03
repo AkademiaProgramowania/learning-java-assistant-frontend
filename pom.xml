@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                assistant.front.learningjavaassistantfrontend/assistant.front.learningjavaassistantfrontend.HelloApplication
+                                assistant.front.learningjavaassistantfrontend/akademia.assistant.front.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

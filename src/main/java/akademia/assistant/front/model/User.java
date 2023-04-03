@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend;
+package akademia.assistant.front.model;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ public class User implements Serializable {
     private String username = "";
     private String password = "";
 
-    User(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
