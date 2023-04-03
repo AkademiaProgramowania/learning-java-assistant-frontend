@@ -9,7 +9,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<AnchorPane prefHeight="872.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="akademia.assistant.front.controller.MainWindowController">
+<AnchorPane prefHeight="872.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="titleLabel" layoutX="288.0" layoutY="34.0" text="AKADEMIA PROGRAMOWANIA">
          <font>
