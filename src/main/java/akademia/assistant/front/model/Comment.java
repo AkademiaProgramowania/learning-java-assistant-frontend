@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend;
+package akademia.assistant.front.model;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ public class Comment implements Serializable {
     private User sender;
     private String answer = "";
 
-    Comment(User sender, String answer) {
+    public Comment(User sender, String answer) {
         this.sender = sender;
         this.answer = answer;
     }

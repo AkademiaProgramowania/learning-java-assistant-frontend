@@ -1,4 +1,4 @@
-package assistant.front.learningjavaassistantfrontend;
+package akademia.assistant.front.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +8,7 @@ public class Category implements Serializable {
     private List<Problem> problems;
     public static final long serialVersionUID = 869539837255658821L;
 
-    Category(String categoryName, List<Problem> problems) {
+    public Category(String categoryName, List<Problem> problems) {
         this.categoryName = categoryName;
         this.problems = problems;
     }

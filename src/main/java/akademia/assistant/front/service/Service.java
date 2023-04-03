@@ -1,15 +1,22 @@
-package assistant.front.learningjavaassistantfrontend;
+package akademia.assistant.front.service;
+
+import akademia.assistant.front.model.User;
+import akademia.assistant.front.exception.AuthenticationException;
+import akademia.assistant.front.model.Category;
+import akademia.assistant.front.model.Problem;
+import akademia.assistant.front.repository.BinFileRepository;
+import akademia.assistant.front.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//todo refactor to two main services: for Authentication and for basic operations on Problem
 public class Service {
     private final Repository repository = new BinFileRepository();
     private final List<Category> categoryList;
     private final List<User> users;
     private User currentUser;
 
-    Service() {
+    public Service() {
         users = repository.loadUsersFromFile();
         categoryList = repository.loadCategoriesFromFile();
     }

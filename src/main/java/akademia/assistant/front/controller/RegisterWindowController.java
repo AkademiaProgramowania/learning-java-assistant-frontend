@@ -1,13 +1,19 @@
-package assistant.front.learningjavaassistantfrontend;
+package akademia.assistant.front.controller;
 
-import javafx.event.ActionEvent;
+import akademia.assistant.front.exception.AuthenticationException;
+import akademia.assistant.front.service.Service;
+import akademia.assistant.front.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class RegisterWindowController {
-    private Service service = new Service();
+public class RegisterWindowController extends Controller {
+
+    public RegisterWindowController(Service service, ViewFactory viewFactory) {
+        super(service, viewFactory);
+    }
 
     @FXML
     private Label errorLabel;
@@ -21,11 +27,14 @@ public class RegisterWindowController {
     @FXML
     private TextField usernameField;
 
+    private String FXMLName = "register-window.fxml";
+
     @FXML
     void onLoginClick() {
         try {
             service.login(usernameField.getText(), passwordField.getText());
-            System.out.println("Zalogowano pomyślnie, ciąg dalszy scenariusza.");
+            closeWindow();
+            viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());
         }
@@ -35,10 +44,14 @@ public class RegisterWindowController {
     void onRegisterClick() {
         try {
             service.register(usernameField.getText(), passwordField.getText());
-            System.out.println("Zarejestrowano pomyślnie, ciąg dalszy scenariusza.");
+            closeWindow();
+            viewFactory.showMainWindow();
         } catch (AuthenticationException e) {
             errorLabel.setText(e.getMessage());
         }
     }
 
+    public String getFXMLName() {
+        return FXMLName;
+    }
 }
