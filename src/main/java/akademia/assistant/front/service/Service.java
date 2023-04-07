@@ -18,7 +18,10 @@ public class Service {
 
     public Service() {
         users = repository.loadUsersFromFile();
-        categoryList = repository.loadCategoriesFromFile();
+//        categoryList = repository.loadCategoriesFromFile();
+        categoryList = new ArrayList<>();
+        categoryList.add(new Category("Basic", basicProblemFactory()));
+        categoryList.add(new Category("OOP", OOPProblemFactory()));
     }
 
     public void login(String username, String password) {
