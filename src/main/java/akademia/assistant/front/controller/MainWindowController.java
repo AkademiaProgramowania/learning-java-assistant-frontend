@@ -4,63 +4,53 @@ import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.TextFlow;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainWindowController extends Controller {
-
+public class MainWindowController extends Controller implements Initializable {
     @FXML
     private TextField answerField;
-
-    @FXML
-    private Label answerLabel;
-
-    @FXML
-    private ListView<Category> categoriesListView;
-
-    @FXML
-    private Label categoryLabel;
 
     @FXML
     private TextFlow descriptionProblemField;
 
     @FXML
-    private Label descriptionProblemLabel;
-
-    @FXML
     private TextFlow listOfAnswersField;
 
     @FXML
-    private Label listOfAnswersLabel;
+    private ChoiceBox<Category> listOfCategories;
 
     @FXML
-    private Label problemLabel;
+    private ChoiceBox<Problem> listOfProblems;
 
-    @FXML
-    private ListView<?> problemsListView;
+    private final String FXMLName = "main-window.fxml";
 
-    @FXML
-    private Label titleLabel;
-
-    private String FXMLName = "main-window.fxml";
+    private ObservableList<Category> categoriesList = FXCollections.observableList(service.getCategories());
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
     }
 
-    @FXML
-    void confirmAnswer() {
-        System.out.println("confirm answer");
-    }
-
     @Override
     public String getFXMLName() {
         return FXMLName;
+    }
+
+    @FXML
+    void confirmAnswer() {
+        System.out.println("answer confirmed");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        listOfCategories.setItems(categoriesList);
     }
 }

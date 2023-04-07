@@ -10,41 +10,41 @@
 
 <AnchorPane prefHeight="872.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="titleLabel" layoutX="288.0" layoutY="34.0" text="AKADEMIA PROGRAMOWANIA">
+      <Label layoutX="288.0" layoutY="34.0" text="AKADEMIA PROGRAMOWANIA">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="categoryLabel" layoutX="20.0" layoutY="159.0" prefHeight="17.0" prefWidth="203.0" text="KATEGORIA">
+      <Label layoutX="20.0" layoutY="159.0" prefHeight="17.0" prefWidth="203.0" text="KATEGORIA">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="problemLabel" layoutX="232.0" layoutY="159.0" text="ZAGADNIENIE">
+      <Label layoutX="232.0" layoutY="159.0" text="ZAGADNIENIE">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="descriptionProblemLabel" layoutX="20.0" layoutY="219.0" text="OPIS WYBRANEGO ZAGADNIENIA">
+      <Label layoutX="20.0" layoutY="219.0" text="OPIS WYBRANEGO ZAGADNIENIA">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextFlow fx:id="descriptionProblemField" layoutX="20.0" layoutY="239.0" prefHeight="114.0" prefWidth="1072.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="668.0" />
       <TextField fx:id="answerField" alignment="TOP_LEFT" layoutX="472.0" layoutY="239.0" prefHeight="114.0" prefWidth="620.0" AnchorPane.rightAnchor="20.0" />
-      <Label fx:id="answerLabel" layoutX="472.0" layoutY="219.0" text="ODPOWIEDŹ NA ZAGADNIENIE">
+      <Label layoutX="472.0" layoutY="219.0" text="ODPOWIEDŹ NA ZAGADNIENIE">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button layoutX="1024.0" layoutY="353.0" mnemonicParsing="false" onAction="#confirmAnswer" text="Zatwierdź" />
-      <Label fx:id="listOfAnswersLabel" layoutX="20.0" layoutY="403.0" text="LISTA ODPOWIEDZI NA ZAGADNIENIE">
+      <Label layoutX="20.0" layoutY="403.0" text="LISTA ODPOWIEDZI NA ZAGADNIENIE">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextFlow fx:id="listOfAnswersField" layoutX="20.0" layoutY="423.0" prefHeight="435.0" prefWidth="1072.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <ChoiceBox layoutX="20.0" layoutY="179.0" prefHeight="25.0" prefWidth="203.0" />
-      <ChoiceBox layoutX="232.0" layoutY="179.0" prefHeight="25.0" prefWidth="860.0" />
+      <ChoiceBox fx:id="listOfCategories" layoutX="20.0" layoutY="179.0" prefHeight="25.0" prefWidth="203.0" />
+      <ChoiceBox fx:id="listOfProblems" layoutX="232.0" layoutY="179.0" prefHeight="25.0" prefWidth="860.0" />
    </children>
 </AnchorPane>
