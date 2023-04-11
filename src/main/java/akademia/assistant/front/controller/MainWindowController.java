@@ -18,6 +18,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
+
+    @FXML
+    private Label addProblemInfo;
+
     @FXML
     private TextField answerField;
 
@@ -48,6 +52,16 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     @FXML
+    void addProblem() {
+        if (listOfCategoriesCb.getSelectionModel().isEmpty()) {
+            addProblemInfo.setText("Nie zaznaczono kategorii");
+        } else {
+            addProblemInfo.setText("");
+            System.out.println("przejście do okna dodającego pytanie");
+        }
+    }
+
+    @FXML
     void confirmAnswer() {
         System.out.println("answer confirmed");// TODO: 11.04.2023 initialize add answer button
     }
@@ -66,7 +80,7 @@ public class MainWindowController extends Controller implements Initializable {
         listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (listOfProblemsCb.isShowing()) {
+                if (!listOfProblemsCb.getSelectionModel().isEmpty()) {
                     descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
                 }
             }
