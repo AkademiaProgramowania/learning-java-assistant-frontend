@@ -66,8 +66,9 @@ public class MainWindowController extends Controller implements Initializable {
         listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-                // TODO: 11.04.2023 bugs
+                if (listOfProblemsCb.isShowing()) {
+                    descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
+                }
             }
         });
     }
