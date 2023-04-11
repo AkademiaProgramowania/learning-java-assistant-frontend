@@ -4,6 +4,8 @@ import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,14 +28,14 @@ public class MainWindowController extends Controller implements Initializable {
     private TextFlow listOfAnswersField;
 
     @FXML
-    private ChoiceBox<Category> listOfCategories;
+    private ChoiceBox<Category> listOfCategoriesCb;
 
     @FXML
-    private ChoiceBox<Problem> listOfProblems;
+    private ChoiceBox<Problem> listOfProblemsCb;
 
     private final String FXMLName = "main-window.fxml";
-
-    private ObservableList<Category> categoriesList = FXCollections.observableList(service.getCategories());
+    private final ObservableList<Category> categoriesObservableList = FXCollections.observableList(service.getCategories());
+    private ObservableList<Problem> problemsObservableList;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
@@ -46,11 +48,18 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        System.out.println("answer confirmed");
+        System.out.println("answer confirmed");// TODO: 11.04.2023 initialize add answer button
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listOfCategories.setItems(categoriesList);
+        listOfCategoriesCb.setItems(categoriesObservableList);
+        listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
+                listOfProblemsCb.setItems(problemsObservableList);
+            }
+        });
     }
 }
