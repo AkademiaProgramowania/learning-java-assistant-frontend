@@ -24,4 +24,9 @@ public class Category implements Serializable {
     public void addProblem(Problem problem) {
         problems.add(problem);
     }
+
+    @Override
+    public String toString() {
+        return categoryName;
+    }
 }

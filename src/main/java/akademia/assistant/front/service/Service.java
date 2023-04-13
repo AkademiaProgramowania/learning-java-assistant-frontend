@@ -18,7 +18,11 @@ public class Service {
 
     public Service() {
         users = repository.loadUsersFromFile();
-        categoryList = repository.loadCategoriesFromFile();
+//        categoryList = repository.loadCategoriesFromFile();
+        categoryList = new ArrayList<>();
+        categoryList.add(new Category("Basic", basicProblemFactory()));
+        categoryList.add(new Category("OOP", OOPProblemFactory()));
+        categoryList.add(new Category("Advance", advanceProblemFactory()));
     }
 
     public void login(String username, String password) {
@@ -90,16 +94,35 @@ public class Service {
     public List<Problem> basicProblemFactory() {
         Problem basics1 = new Problem("Wyświetlanie w konsoli",
                 "Jak wygląda instrukcja, która drukuje w języku Java?");
+        Problem basics2 = new Problem("Tytuł problemu 2", "Pytanie problemu 2");
+        Problem basics3 = new Problem("Tytuł problemu 3", "Pytanie problemu 3");
         List<Problem> basicProblems = new ArrayList<>();
         basicProblems.add(basics1);
+        basicProblems.add(basics2);
+        basicProblems.add(basics3);
         return basicProblems;
     }
 
     public List<Problem> OOPProblemFactory() {
         Problem OOP1 = new Problem("Tworzenie obiektu",
                 "Jaką instrukcją należy stworzyć obiekt przykładowej klasy Controller?");
+        Problem OOP5 = new Problem("Tytuł problemu 5", "Pytanie problemu 5");
+        Problem OOP6 = new Problem("Tytuł problemu 6", "Pytanie problemu 6");
         List<Problem> OOPProblems = new ArrayList<>();
         OOPProblems.add(OOP1);
+        OOPProblems.add(OOP5);
+        OOPProblems.add(OOP6);
+        return OOPProblems;
+    }
+
+    public List<Problem> advanceProblemFactory() {
+        Problem advance1 = new Problem("Tytuł problemu 10",
+                "Pytanie problemu 10?");
+        Problem advance2 = new Problem("Tytuł problemu 11",
+                "Pytanie problemu 11?");
+        List<Problem> OOPProblems = new ArrayList<>();
+        OOPProblems.add(advance1);
+        OOPProblems.add(advance2);
         return OOPProblems;
     }
 }

@@ -34,4 +34,9 @@ public class Problem implements Serializable {
     public List<Comment> getComments() {
         return comments;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
