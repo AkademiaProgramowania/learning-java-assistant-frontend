@@ -12,8 +12,8 @@
    <children>
       <AnchorPane prefHeight="303.0" prefWidth="515.0">
          <children>
-            <PasswordField fx:id="passwordField" layoutX="172.0" layoutY="153.0" prefHeight="25.0" prefWidth="215.0" />
             <TextField fx:id="usernameField" layoutX="172.0" layoutY="122.0" prefHeight="25.0" prefWidth="215.0" />
+            <PasswordField fx:id="passwordField" layoutX="172.0" layoutY="153.0" prefHeight="25.0" prefWidth="215.0" />
             <Label fx:id="textLabel" layoutX="150.0" layoutY="46.0" text="ZADANIOMAT Z JAVY ">
                <font>
                   <Font name="System Bold" size="20.0" />

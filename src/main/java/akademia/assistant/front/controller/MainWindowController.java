@@ -24,9 +24,6 @@ public class MainWindowController extends Controller implements Initializable {
     private Button addProblemButton;
 
     @FXML
-    private Label addProblemInfo;
-
-    @FXML
     private TextField answerField;
 
     @FXML
