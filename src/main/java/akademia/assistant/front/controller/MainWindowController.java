@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,6 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
+
+    @FXML
+    private Button addProblemButton;
 
     @FXML
     private Label addProblemInfo;
@@ -53,12 +57,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void addProblem() {
-        if (listOfCategoriesCb.getSelectionModel().isEmpty()) {
-            addProblemInfo.setText("Nie zaznaczono kategorii");
-        } else {
-            addProblemInfo.setText("");
-            System.out.println("przejście do okna dodającego pytanie");
-        }
+        System.out.println("przejście do okna dodającego pytanie"); // TODO: 21.04.2023 initialize add problem buttoon
     }
 
     @FXML
@@ -70,11 +69,13 @@ public class MainWindowController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listOfAnswers.setText("Lista odpowiedzi na pytanie"); // TODO: 11.04.2023 to remove
         listOfCategoriesCb.setItems(categoriesObservableList);
+        addProblemButton.setDisable(true);
         listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
                 listOfProblemsCb.setItems(problemsObservableList);
+                addProblemButton.setDisable(false);
             }
         });
         listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
