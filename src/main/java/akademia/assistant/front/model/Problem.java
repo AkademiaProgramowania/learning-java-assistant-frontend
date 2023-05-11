@@ -1,10 +1,9 @@
 package akademia.assistant.front.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem implements Serializable {
+public class Problem {
     private String title = "";
     private String question = "";
     private List<Comment> comments;

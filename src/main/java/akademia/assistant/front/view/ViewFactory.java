@@ -3,6 +3,7 @@ package akademia.assistant.front.view;
 import akademia.assistant.front.controller.MainWindowController;
 import akademia.assistant.front.controller.RegisterWindowController;
 import akademia.assistant.front.controller.Controller;
+import akademia.assistant.front.model.User;
 import akademia.assistant.front.service.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
