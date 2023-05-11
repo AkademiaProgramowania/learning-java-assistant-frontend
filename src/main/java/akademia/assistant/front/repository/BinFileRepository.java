@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BinFileRepository implements Repository {
     @Override
-    public String saveUsersToFile(List<User> users) {
+    public String saveUsers(List<User> users) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.bin"));
             oos.writeObject(users);
@@ -22,7 +22,7 @@ public class BinFileRepository implements Repository {
     }
 
     @Override
-    public List<User> loadUsersFromFile() {
+    public List<User> loadUsers() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.bin"));
             List<User> users = (List<User>) ois.readObject();

@@ -17,7 +17,7 @@ public class Service {
     private User currentUser;
 
     public Service() {
-        users = repository.loadUsersFromFile();
+        users = repository.loadUsers();
 //        categoryList = repository.loadCategoriesFromFile();
         categoryList = new ArrayList<>();
         categoryList.add(new Category("Basic", basicProblemFactory()));
@@ -64,7 +64,7 @@ public class Service {
 
     private void addUserToUserList(User newUser) {
         users.add(newUser);
-        repository.saveUsersToFile(users);
+        repository.saveUsers(users);
     }
 
     private void clearCurrentUser() {

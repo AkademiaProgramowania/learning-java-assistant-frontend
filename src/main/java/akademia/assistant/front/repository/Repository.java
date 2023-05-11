@@ -6,9 +6,9 @@ import akademia.assistant.front.model.Category;
 import java.util.List;
 
 public interface Repository {
-    String saveUsersToFile(List<User> users);
+    String saveUsers(List<User> users);
 
-    List<User> loadUsersFromFile();
+    List<User> loadUsers();
 
     String updateCategoriesToFile(List<Category> categories);
 
