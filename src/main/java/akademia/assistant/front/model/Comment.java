@@ -1,8 +1,6 @@
 package akademia.assistant.front.model;
 
-import java.io.Serializable;
-
-public class Comment implements Serializable {
+public class Comment {
     private User sender;
     private String answer = "";
 
