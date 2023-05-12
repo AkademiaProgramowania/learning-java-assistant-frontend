@@ -1,5 +1,6 @@
 package akademia.assistant.front.service;
 
+import akademia.assistant.front.exception.ProblemSubmitException;
 import akademia.assistant.front.model.User;
 import akademia.assistant.front.exception.AuthenticationException;
 import akademia.assistant.front.model.Category;
@@ -85,6 +86,14 @@ public class Service {
 
     public Category getCategoryByIndex(int index) {
         return categoryList.get(index);
+    }
+
+    public void addProblemToCategory(Category category, String title, String question) {
+        if (title.isEmpty() || question.isEmpty()) {
+            throw new ProblemSubmitException("Tytuł lub treść pytania są puste.");
+        }
+        Problem problem = new Problem(title, question);
+        category.addProblem(problem);
     }
 
     public List<Problem> basicProblemFactory() {

@@ -17,37 +17,26 @@ public class MainWindowController extends Controller {
 
     @FXML
     private TextField answerField;
-
     @FXML
     private Label answerLabel;
-
     @FXML
     private ListView<Category> categoriesListView;
-
     @FXML
     private Label categoryLabel;
-
     @FXML
     private TextFlow descriptionProblemField;
-
     @FXML
     private Label descriptionProblemLabel;
-
     @FXML
     private TextFlow listOfAnswersField;
-
     @FXML
     private Label listOfAnswersLabel;
-
     @FXML
     private Label problemLabel;
-
     @FXML
     private ListView<?> problemsListView;
-
     @FXML
     private Label titleLabel;
-
     private String FXMLName = "main-window.fxml";
 
     public MainWindowController(Service service, ViewFactory viewFactory) {

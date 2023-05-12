@@ -1,6 +1,7 @@
 package akademia.assistant.front.view;
 
 import akademia.assistant.front.controller.MainWindowController;
+import akademia.assistant.front.controller.ProblemWindowController;
 import akademia.assistant.front.controller.RegisterWindowController;
 import akademia.assistant.front.controller.Controller;
 import akademia.assistant.front.service.Service;
@@ -25,6 +26,11 @@ public class ViewFactory {
 
     public void showMainWindow() {
         Controller controller = new MainWindowController(service, this);
+        showWindow(controller);
+    }
+
+    public void showProblemWindow() {
+        Controller controller = new ProblemWindowController(service, this);
         showWindow(controller);
     }
 
