@@ -11,23 +11,19 @@ import javafx.stage.Stage;
 
 public class RegisterWindowController extends Controller {
 
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Label textLabel;
+    @FXML
+    private TextField usernameField;
+    private final String FXMLName = "register-window.fxml";
+
     public RegisterWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
     }
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label textLabel;
-
-    @FXML
-    private TextField usernameField;
-
-    private String FXMLName = "register-window.fxml";
 
     @FXML
     void onLoginClick() {
