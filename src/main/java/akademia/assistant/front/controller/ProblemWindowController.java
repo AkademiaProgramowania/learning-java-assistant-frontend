@@ -2,6 +2,7 @@ package akademia.assistant.front.controller;
 
 import akademia.assistant.front.exception.ProblemSubmitException;
 import akademia.assistant.front.model.Category;
+import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
 import javafx.fxml.FXML;
@@ -17,16 +18,20 @@ public class ProblemWindowController extends Controller {
     @FXML
     private Label errorLabel;
 
-    private String FXMLName = "problem-window.fxml";
+    private final String FXMLName = "problem-window.fxml";
+    private Category chosenCategory;
 
-    public ProblemWindowController(Service service, ViewFactory viewFactory) {
+    public ProblemWindowController(Service service, ViewFactory viewFactory, Category chosenCategory) {
         super(service, viewFactory);
+        this.chosenCategory = chosenCategory;
     }
 
     @FXML
     void onPublishProblemButtonClick() {
         try {
-
+            chosenCategory.addProblem(new Problem(problemTitleField.getText(), problemDetailsField.getText()));
+            closeWindow();
+            viewFactory.showMainWindow();
         } catch (ProblemSubmitException e) {
             errorLabel.setText(e.getMessage());
         }
@@ -34,6 +39,6 @@ public class ProblemWindowController extends Controller {
 
     @Override
     public String getFXMLName() {
-        return null;
+        return FXMLName;
     }
 }

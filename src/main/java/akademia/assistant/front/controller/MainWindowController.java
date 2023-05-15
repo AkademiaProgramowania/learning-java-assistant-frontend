@@ -53,8 +53,9 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     @FXML
-    void addProblem() {
-        System.out.println("przejście do okna dodającego pytanie"); // TODO: 21.04.2023 initialize add problem buttoon
+    void onAddProblemButtonClick() {
+        closeWindow();
+        viewFactory.showProblemWindow(listOfCategoriesCb.getValue());
     }
 
     @FXML

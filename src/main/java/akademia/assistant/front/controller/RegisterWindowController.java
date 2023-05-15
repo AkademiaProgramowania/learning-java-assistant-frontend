@@ -19,7 +19,7 @@ public class RegisterWindowController extends Controller {
     private Label textLabel;
     @FXML
     private TextField usernameField;
-    private String FXMLName = "register-window.fxml";
+    private final String FXMLName = "register-window.fxml";
 
     public RegisterWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);

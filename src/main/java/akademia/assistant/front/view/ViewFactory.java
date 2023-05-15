@@ -4,6 +4,7 @@ import akademia.assistant.front.controller.MainWindowController;
 import akademia.assistant.front.controller.ProblemWindowController;
 import akademia.assistant.front.controller.RegisterWindowController;
 import akademia.assistant.front.controller.Controller;
+import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.User;
 import akademia.assistant.front.service.Service;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +31,8 @@ public class ViewFactory {
         showWindow(controller);
     }
 
-    public void showProblemWindow() {
-        Controller controller = new ProblemWindowController(service, this);
+    public void showProblemWindow(Category category) {
+        Controller controller = new ProblemWindowController(service, this, category);
         showWindow(controller);
     }
 
