@@ -1,4 +1,4 @@
-package akademia.assistant.front.controller.factory;
+package akademia.assistant.front.factory;
 
 import akademia.assistant.front.model.Problem;
 
