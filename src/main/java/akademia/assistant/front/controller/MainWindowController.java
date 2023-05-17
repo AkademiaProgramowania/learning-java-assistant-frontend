@@ -86,9 +86,7 @@ public class MainWindowController extends Controller implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            if (!listOfProblemsCb.getSelectionModel().isEmpty()) {
                 descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-            }
         }
     }
 }
