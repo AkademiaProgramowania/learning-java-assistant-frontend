@@ -68,21 +68,27 @@ public class MainWindowController extends Controller implements Initializable {
         listOfAnswers.setText("Lista odpowiedzi na pytanie"); // TODO: 11.04.2023 to remove
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
-        listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
-                listOfProblemsCb.setItems(problemsObservableList);
-                addProblemButton.setDisable(false);
+        listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new CategoryListener());
+        listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ProblemListener());
+    }
+
+    class CategoryListener implements ChangeListener<Number> {
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
+            listOfProblemsCb.setItems(problemsObservableList);
+            addProblemButton.setDisable(false);
+        }
+    }
+
+    class ProblemListener implements ChangeListener<Number> {
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if (!listOfProblemsCb.getSelectionModel().isEmpty()) {
+                descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
             }
-        });
-        listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (!listOfProblemsCb.getSelectionModel().isEmpty()) {
-                    descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-                }
-            }
-        });
+        }
     }
 }
