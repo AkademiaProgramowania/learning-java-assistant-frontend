@@ -33,6 +33,9 @@ public class MainWindowController extends Controller implements Initializable {
     private Label listOfAnswers;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private ChoiceBox<Category> listOfCategoriesCb;
 
     @FXML
@@ -60,7 +63,12 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        System.out.println("answer confirmed");// TODO: 11.04.2023 initialize add answer button
+        if (listOfProblemsCb.getSelectionModel().isEmpty() || answerField.getText().isEmpty()) {
+            errorLabel.setVisible(true);
+        } else {
+            errorLabel.setVisible(false);
+
+        }
     }
 
     @Override
@@ -68,14 +76,15 @@ public class MainWindowController extends Controller implements Initializable {
         listOfAnswers.setText("Lista odpowiedzi na pytanie"); // TODO: 11.04.2023 to remove
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
+        errorLabel.setVisible(false);
         listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new CategoryListener());
         listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ProblemListener());
     }
 
-    class CategoryListener implements ChangeListener<Number> {
+    class CategoryListener implements ChangeListener<Number> {// CHECK: 18.05.2023
 
         @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// CHECK: 18.05.2023 czemu tu jest pytajnik? Czy może być Category?
             problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
             listOfProblemsCb.setItems(problemsObservableList);
             addProblemButton.setDisable(false);
