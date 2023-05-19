@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +41,8 @@ public class MainWindowController extends Controller implements Initializable {
     private final String FXMLName = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
     private ObservableList<Problem> problemsObservableList;
+    private SingleSelectionModel<Category> chosenCategory;
+    private SingleSelectionModel<Problem> chosenProblem;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
@@ -63,22 +62,24 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        if (listOfProblemsCb.getSelectionModel().isEmpty() || answerField.getText().isEmpty()) {
+        if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
             errorLabel.setVisible(true);
+            System.out.println("nie dodano odpowiedzi"); // TODO: 19.05.2023 to remove
         } else {
             errorLabel.setVisible(false);
-
+            System.out.println("odpowiedź dodana");// TODO: 19.05.2023 to remove
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listOfAnswers.setText("Lista odpowiedzi na pytanie"); // TODO: 11.04.2023 to remove
+        chosenCategory = listOfCategoriesCb.getSelectionModel();
+        chosenProblem = listOfProblemsCb.getSelectionModel();
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
-        listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new CategoryListener());
-        listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ProblemListener());
+        chosenCategory.selectedIndexProperty().addListener(new CategoryListener());
+        chosenProblem.selectedIndexProperty().addListener(new ProblemListener());
     }
 
     class CategoryListener implements ChangeListener<Number> {// CHECK: 18.05.2023
