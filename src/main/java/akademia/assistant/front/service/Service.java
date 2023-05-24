@@ -67,7 +67,7 @@ public class Service {
         currentUser = null;
     }
 
-    private User getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 

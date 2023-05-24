@@ -1,6 +1,7 @@
 package akademia.assistant.front.controller;
 
 import akademia.assistant.front.model.Category;
+import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
@@ -65,10 +66,24 @@ public class MainWindowController extends Controller implements Initializable {
         if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
             errorLabel.setVisible(true);
             System.out.println("nie dodano odpowiedzi"); // TODO: 19.05.2023 to remove
+            listOfAnswers.setText("");
         } else {
             errorLabel.setVisible(false);
             System.out.println("odpowiedź dodana");// TODO: 19.05.2023 to remove
+            chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
+            listOfAnswers.setText(showCommentsOfProblem());
         }
+    }
+
+    private String showCommentsOfProblem() {// TODO: 24.05.2023 to change??
+        StringBuilder commentsOfProblem = new StringBuilder();
+        for (int i = 0; i < chosenProblem.getSelectedItem().getComments().size(); i++) {
+            Comment actualComment = chosenProblem.getSelectedItem().getComments().get(i);
+            commentsOfProblem
+                    .append("UŻYTKOWNIK: ").append(actualComment.getSender().getUsername())
+                    .append("    ODPOWIEDŹ : ").append(actualComment.getAnswer()).append("\n");
+        }
+        return commentsOfProblem.toString();
     }
 
     @Override
@@ -82,7 +97,7 @@ public class MainWindowController extends Controller implements Initializable {
         chosenProblem.selectedIndexProperty().addListener(new ProblemListener());
     }
 
-    class CategoryListener implements ChangeListener<Number> {// CHECK: 18.05.2023
+    class CategoryListener implements ChangeListener<Number> {// CHECK: 18.05.2023 czy przenieść tą klasę do nowego pakietu?
 
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// CHECK: 18.05.2023 czemu tu jest pytajnik? Czy może być Category?
