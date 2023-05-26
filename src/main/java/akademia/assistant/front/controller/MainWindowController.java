@@ -65,18 +65,17 @@ public class MainWindowController extends Controller implements Initializable {
     void confirmAnswer() {
         if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
             errorLabel.setVisible(true);
-            System.out.println("nie dodano odpowiedzi"); // TODO: 19.05.2023 to remove
             listOfAnswers.setText("");
         } else {
             errorLabel.setVisible(false);
-            System.out.println("odpowiedź dodana");// TODO: 19.05.2023 to remove
             chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
             listOfAnswers.setText(showCommentsOfProblem());
+            answerField.setText("");
         }
     }
 
-    private String showCommentsOfProblem() {// TODO: 24.05.2023 to change??
-        StringBuilder commentsOfProblem = new StringBuilder();
+    private String showCommentsOfProblem() { // TODO: 26.05.2023 co w sytuacji odpowiedzi na pytanie? przy zmianie kategorii, lub pytania? lista odpowiedzi ma się czyścić? Program powinien zapamiętać na które pytania użytkownik odpowiedział i dożywotnio pokazywać okdpowiedzi ?
+        StringBuilder commentsOfProblem = new StringBuilder(); // TODO: 26.05.2023 zmienić rodzaj pola odpowiedzi? tak żeby to nie był StringBulider?
         for (int i = 0; i < chosenProblem.getSelectedItem().getComments().size(); i++) {
             Comment actualComment = chosenProblem.getSelectedItem().getComments().get(i);
             commentsOfProblem
@@ -97,10 +96,10 @@ public class MainWindowController extends Controller implements Initializable {
         chosenProblem.selectedIndexProperty().addListener(new ProblemListener());
     }
 
-    class CategoryListener implements ChangeListener<Number> {// CHECK: 18.05.2023 czy przenieść tą klasę do nowego pakietu?
+    class CategoryListener implements ChangeListener<Number> {// TODO: 25.05.2023 czy przenieść tą klasę do nowego pakietu?
 
         @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// CHECK: 18.05.2023 czemu tu jest pytajnik? Czy może być Category?
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// TODO: 26.05.2023 zmiana na Category?
             problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
             listOfProblemsCb.setItems(problemsObservableList);
             addProblemButton.setDisable(false);
@@ -111,7 +110,11 @@ public class MainWindowController extends Controller implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if (chosenProblem.isEmpty()) {
+                descriptionProblem.setText("");
+            } else {
                 descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
+            }
         }
     }
 }
