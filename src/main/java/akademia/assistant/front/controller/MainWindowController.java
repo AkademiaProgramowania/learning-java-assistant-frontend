@@ -28,7 +28,17 @@ public class MainWindowController extends Controller implements Initializable {
     private Label descriptionProblem;
 
     @FXML
-    private Label listOfAnswers;
+    private TableView<?> listOfAnswers;
+
+    @FXML
+    private TableColumn<?, ?> lOAAnswer;
+
+    @FXML
+    private TableColumn<?, ?> lOADate;
+
+    @FXML
+    private TableColumn<?, ?> lOAUser;
+
 
     @FXML
     private Label errorLabel;
@@ -65,11 +75,9 @@ public class MainWindowController extends Controller implements Initializable {
     void confirmAnswer() {
         if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
             errorLabel.setVisible(true);
-            listOfAnswers.setText("");
         } else {
             errorLabel.setVisible(false);
             chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
-            listOfAnswers.setText(showCommentsOfProblem());
             answerField.setText("");
         }
     }
