@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="problemTitleField" layoutX="39.0" layoutY="99.0" prefHeight="30.0" prefWidth="229.0" />
       <Button layoutX="39.0" layoutY="339.0" mnemonicParsing="false" onAction="#onPublishProblemButtonClick" prefHeight="30.0" prefWidth="229.0" text="Opublikuj" />

@@ -1,6 +1,7 @@
 package akademia.assistant.front.controller;
 
 import akademia.assistant.front.model.Category;
+import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
@@ -10,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +31,9 @@ public class MainWindowController extends Controller implements Initializable {
     private Label listOfAnswers;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private ChoiceBox<Category> listOfCategoriesCb;
 
     @FXML
@@ -41,6 +42,8 @@ public class MainWindowController extends Controller implements Initializable {
     private final String FXMLName = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
     private ObservableList<Problem> problemsObservableList;
+    private SingleSelectionModel<Category> chosenCategory;
+    private SingleSelectionModel<Problem> chosenProblem;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
@@ -60,29 +63,69 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        System.out.println("answer confirmed");// TODO: 11.04.2023 initialize add answer button
+        if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
+            errorLabel.setVisible(true);
+            listOfAnswers.setText("");
+        } else {
+            errorLabel.setVisible(false);
+            chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
+            listOfAnswers.setText(showCommentsOfProblem());
+            answerField.setText("");
+        }
+    }
+
+    private String showCommentsOfProblem() { // TODO: 26.05.2023 co w sytuacji odpowiedzi na pytanie? przy zmianie kategorii, lub pytania? lista odpowiedzi ma się czyścić? Program powinien zapamiętać na które pytania użytkownik odpowiedział i dożywotnio pokazywać okdpowiedzi ?
+        StringBuilder commentsOfProblem = new StringBuilder(); // TODO: 26.05.2023 zmienić rodzaj pola odpowiedzi? tak żeby to nie był StringBulider?
+        for (int i = 0; i < chosenProblem.getSelectedItem().getComments().size(); i++) {
+            Comment actualComment = chosenProblem.getSelectedItem().getComments().get(i);
+            commentsOfProblem
+                    .append("UŻYTKOWNIK: ").append(actualComment.getSender().getUsername())
+                    .append("    ODPOWIEDŹ : ").append(actualComment.getAnswer()).append("\n");
+        }
+        return commentsOfProblem.toString();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listOfAnswers.setText("Lista odpowiedzi na pytanie"); // TODO: 11.04.2023 to remove
+        chosenCategory = listOfCategoriesCb.getSelectionModel();
+        chosenProblem = listOfProblemsCb.getSelectionModel();
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
-        listOfCategoriesCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
-                listOfProblemsCb.setItems(problemsObservableList);
-                addProblemButton.setDisable(false);
+        errorLabel.setVisible(false);
+        chosenCategory.selectedIndexProperty().addListener(new CategoryListener());
+        chosenProblem.selectedIndexProperty().addListener(
+                (observable,oldValue, newValue) -> showProblem(newValue));
+    }
+
+    private void showProblem(Number selectedProblem) {
+        if (chosenProblem.isEmpty()) {
+            descriptionProblem.setText("");
+        } else {
+            descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
+        }
+    }
+
+
+
+    class CategoryListener implements ChangeListener<Number> {// TODO: 25.05.2023 czy przenieść tą klasę do nowego pakietu?
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// TODO: 26.05.2023 zmiana na Category?
+            problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
+            listOfProblemsCb.setItems(problemsObservableList);
+            addProblemButton.setDisable(false);
+        }
+    }
+
+    class ProblemListener implements ChangeListener<Number> {
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if (chosenProblem.isEmpty()) {
+                descriptionProblem.setText("");
+            } else {
+                descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
             }
-        });
-        listOfProblemsCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (!listOfProblemsCb.getSelectionModel().isEmpty()) {
-                    descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-                }
-            }
-        });
+        }
     }
 }

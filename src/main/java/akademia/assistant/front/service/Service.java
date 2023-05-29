@@ -1,6 +1,6 @@
 package akademia.assistant.front.service;
 
-import akademia.assistant.front.controller.factory.ProblemsFactory;
+import akademia.assistant.front.factory.ProblemsFactory;
 import akademia.assistant.front.model.User;
 import akademia.assistant.front.exception.AuthenticationException;
 import akademia.assistant.front.model.Category;
@@ -67,7 +67,7 @@ public class Service {
         currentUser = null;
     }
 
-    private User getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 
