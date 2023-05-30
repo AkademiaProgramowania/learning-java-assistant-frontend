@@ -101,8 +101,19 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         chosenCategory.selectedIndexProperty().addListener(new CategoryListener());
-        chosenProblem.selectedIndexProperty().addListener(new ProblemListener());
+        chosenProblem.selectedIndexProperty().addListener(
+                (observable,oldValue, newValue) -> showProblem(newValue));
     }
+
+    private void showProblem(Number selectedProblem) {
+        if (chosenProblem.isEmpty()) {
+            descriptionProblem.setText("");
+        } else {
+            descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
+        }
+    }
+
+
 
     class CategoryListener implements ChangeListener<Number> {// TODO: 25.05.2023 czy przenieść tą klasę do nowego pakietu?
 
