@@ -1,5 +1,7 @@
 package akademia.assistant.front.model;
 
+import akademia.assistant.front.exception.ProblemSubmitException;
+
 import java.util.List;
 
 public class Category {
@@ -20,6 +22,9 @@ public class Category {
     }
 
     public void addProblem(Problem problem) {
+        if (problem.getTitle().isEmpty() || problem.getQuestion().isEmpty()) {
+            throw new ProblemSubmitException("Brakuje tytułu lub pytania. Spróbuj jeszcze raz.");
+        }
         problems.add(problem);
     }
 
