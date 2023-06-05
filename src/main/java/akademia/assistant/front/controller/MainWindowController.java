@@ -1,19 +1,20 @@
 package akademia.assistant.front.controller;
 
+import akademia.assistant.front.factory.TableFactory;
 import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
@@ -28,16 +29,16 @@ public class MainWindowController extends Controller implements Initializable {
     private Label descriptionProblem;
 
     @FXML
-    private TableView<?> listOfAnswers;
+    private TableView<TableFactory> listOfAnswers;
 
     @FXML
-    private TableColumn<?, ?> lOAAnswer;
+    private TableColumn<TableFactory, String> lOAAnswer;
 
     @FXML
-    private TableColumn<?, ?> lOADate;
+    private TableColumn<TableFactory, LocalDate> lOADate;
 
     @FXML
-    private TableColumn<?, ?> lOAUser;
+    private TableColumn<TableFactory, String> lOAUser;
 
 
     @FXML
@@ -77,20 +78,25 @@ public class MainWindowController extends Controller implements Initializable {
             errorLabel.setVisible(true);
         } else {
             errorLabel.setVisible(false);
-            chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
-            answerField.setText("");
+            addComment(chosenProblem.getSelectedItem());
+            answerField.clear();
+            showCommentsOfProblem(chosenProblem.getSelectedItem());
         }
     }
 
-    private String showCommentsOfProblem() { // TODO: 26.05.2023 co w sytuacji odpowiedzi na pytanie? przy zmianie kategorii, lub pytania? lista odpowiedzi ma się czyścić? Program powinien zapamiętać na które pytania użytkownik odpowiedział i dożywotnio pokazywać okdpowiedzi ?
-        StringBuilder commentsOfProblem = new StringBuilder(); // TODO: 26.05.2023 zmienić rodzaj pola odpowiedzi? tak żeby to nie był StringBulider?
-        for (int i = 0; i < chosenProblem.getSelectedItem().getComments().size(); i++) {
-            Comment actualComment = chosenProblem.getSelectedItem().getComments().get(i);
-            commentsOfProblem
-                    .append("UŻYTKOWNIK: ").append(actualComment.getSender().getUsername())
-                    .append("    ODPOWIEDŹ : ").append(actualComment.getAnswer()).append("\n");
+    private void addComment(Problem problem) {
+        problem.addComment(new Comment(service.getCurrentUser(), answerField.getText()));
+    }
+
+    private void showCommentsOfProblem(Problem problem) {
+        lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
+        lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        ObservableList<TableFactory> data = FXCollections.observableArrayList();
+        for (Comment comment : problem.getComments()) {
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer());
+            data.add(tableFactory);
         }
-        return commentsOfProblem.toString();
+        listOfAnswers.setItems(data);
     }
 
     @Override
@@ -100,40 +106,24 @@ public class MainWindowController extends Controller implements Initializable {
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
-        chosenCategory.selectedIndexProperty().addListener(new CategoryListener());
+        chosenCategory.selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> showListOfProblems(newValue));
         chosenProblem.selectedIndexProperty().addListener(
-                (observable,oldValue, newValue) -> showProblem(newValue));
+                (observable, oldValue, newValue) -> showDescriptionOfProblem(newValue));
     }
 
-    private void showProblem(Number selectedProblem) {
+    private void showDescriptionOfProblem(Number selectedProblem) {
         if (chosenProblem.isEmpty()) {
-            descriptionProblem.setText("");
+            descriptionProblem.setVisible(false);
         } else {
+            descriptionProblem.setVisible(true);
             descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
         }
     }
-
-
-
-    class CategoryListener implements ChangeListener<Number> {// TODO: 25.05.2023 czy przenieść tą klasę do nowego pakietu?
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// TODO: 26.05.2023 zmiana na Category?
-            problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
-            listOfProblemsCb.setItems(problemsObservableList);
-            addProblemButton.setDisable(false);
-        }
-    }
-
-    class ProblemListener implements ChangeListener<Number> {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            if (chosenProblem.isEmpty()) {
-                descriptionProblem.setText("");
-            } else {
-                descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-            }
-        }
+    
+    private void showListOfProblems(Number selectedCategory) {
+        problemsObservableList = FXCollections.observableList(categoriesObservableList.get(selectedCategory.intValue()).getProblems());
+        listOfProblemsCb.setItems(problemsObservableList);
+        addProblemButton.setDisable(false);
     }
 }
