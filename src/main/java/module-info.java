@@ -1,6 +1,7 @@
 module assistant.front.learningjavaassistantfrontend {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.fasterxml.jackson.databind;
 
 
     opens akademia.assistant.front to javafx.fxml;

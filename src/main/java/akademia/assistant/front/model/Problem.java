@@ -1,5 +1,7 @@
 package akademia.assistant.front.model;
 
+import akademia.assistant.front.jackson.ObjectToJson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ public class Problem {
     private String title = "";
     private String question = "";
     private List<Comment> comments;
+    private ObjectToJson objectToJson = new ObjectToJson();
 
     public Problem(String title, String question) {
         this(title,question,new ArrayList<>());
@@ -28,6 +31,7 @@ public class Problem {
 
     public void addComment(Comment comment) {
         comments.add(comment);
+        objectToJson.convertObjectToJson(comments);
     }
 
     public List<Comment> getComments() {

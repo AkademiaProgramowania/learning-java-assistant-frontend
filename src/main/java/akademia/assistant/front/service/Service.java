@@ -1,17 +1,20 @@
 package akademia.assistant.front.service;
 
 import akademia.assistant.front.factory.ProblemsFactory;
+import akademia.assistant.front.jackson.ObjectToJson;
 import akademia.assistant.front.model.User;
 import akademia.assistant.front.exception.AuthenticationException;
 import akademia.assistant.front.model.Category;
 import akademia.assistant.front.repository.Repository;
 import akademia.assistant.front.repository.RepositoryImpl;
 
+
 import java.util.List;
 //todo refactor to two main services: for Authentication and for basic operations on Problem
 public class Service {
     private final Repository<User> usersRepository = new RepositoryImpl<>();
     private final Repository<Category> categoryRepository = new RepositoryImpl<>();
+    private final ObjectToJson objectToJson = new ObjectToJson();
     private User currentUser;
 
     public Service() {
@@ -47,6 +50,8 @@ public class Service {
         User newUser = new User(username, password);
         addUserToUserList(newUser);
         currentUser = newUser;
+        //todo zapis do pliku
+        objectToJson.convertObjectToJson(usersRepository);
     }
 
 

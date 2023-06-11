@@ -1,12 +1,15 @@
 package akademia.assistant.front.model;
 
 import akademia.assistant.front.exception.ProblemSubmitException;
+import akademia.assistant.front.jackson.ObjectToJson;
 
 import java.util.List;
 
 public class Category {
     private String categoryName = "";
     private List<Problem> problems;
+
+    private ObjectToJson objectToJson = new ObjectToJson();
 
     public Category(String categoryName, List<Problem> problems) {
         this.categoryName = categoryName;
@@ -26,6 +29,7 @@ public class Category {
             throw new ProblemSubmitException("Brakuje tytułu lub pytania. Spróbuj jeszcze raz.");
         }
         problems.add(problem);
+        objectToJson.convertObjectToJson(problems);
     }
 
     @Override

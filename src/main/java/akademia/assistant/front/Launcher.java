@@ -11,7 +11,6 @@ public class Launcher extends Application {
         ViewFactory viewFactory = new ViewFactory();
         viewFactory.showRegisterWindow();
     }
-
     public static void main(String[] args) {
         launch();
     }
