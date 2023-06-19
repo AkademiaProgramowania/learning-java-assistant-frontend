@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -39,7 +40,6 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     private TableColumn<TableFactory, String> lOAUser;
-
 
     @FXML
     private Label errorLabel;
@@ -101,6 +101,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        lOAAnswer.setCellFactory(new TextAreaCellFactory<>());
         chosenCategory = listOfCategoriesCb.getSelectionModel();
         chosenProblem = listOfProblemsCb.getSelectionModel();
         listOfCategoriesCb.setItems(categoriesObservableList);
@@ -126,5 +127,31 @@ public class MainWindowController extends Controller implements Initializable {
         problemsObservableList = FXCollections.observableList(categoriesObservableList.get(selectedCategory.intValue()).getProblems());
         listOfProblemsCb.setItems(problemsObservableList);
         addProblemButton.setDisable(false);
+    }
+
+
+
+    private static class TextAreaCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
+
+        @Override
+        public TableCell<S, T> call(TableColumn<S, T> param) {
+            return new TableCell<>() {
+                private final TextArea textArea = new TextArea();
+
+                @Override
+                protected void updateItem(T item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        textArea.setText(item.toString());
+                        textArea.setWrapText(true);
+                        textArea.setEditable(false);
+                        setGraphic(textArea);
+                    }
+                }
+            };
+        }
     }
 }

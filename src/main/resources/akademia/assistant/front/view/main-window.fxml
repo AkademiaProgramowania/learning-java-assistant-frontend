@@ -48,7 +48,7 @@
       <Label fx:id="descriptionProblem" alignment="TOP_LEFT" layoutX="20.0" layoutY="321.0" prefHeight="114.0" prefWidth="449.0" />
       <Button fx:id="addProblemButton" layoutX="20.0" layoutY="216.0" mnemonicParsing="false" onAction="#onAddProblemButtonClick" prefHeight="25.0" prefWidth="212.0" text="Dodaj pytanie do wybranej kategorii" />
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="725.0" layoutY="446.0" prefHeight="17.0" prefWidth="290.0" text="Brak zaznaczonego zagadnienia lub brak odpowiedzi" />
-      <TableView fx:id="listOfAnswers" layoutX="20.0" layoutY="474.0" prefHeight="384.0" prefWidth="1072.0">
+      <TableView fx:id="listOfAnswers" accessibleRole="TABLE_COLUMN" layoutX="20.0" layoutY="474.0" prefHeight="384.0" prefWidth="1072.0">
         <columns>
           <TableColumn fx:id="lOAUser" prefWidth="170.0" text="Nazwa użytkownika" />
           <TableColumn fx:id="lOADate" prefWidth="134.0" text="Data przesłania" />
