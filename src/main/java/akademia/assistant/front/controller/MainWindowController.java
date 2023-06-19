@@ -23,7 +23,7 @@ public class MainWindowController extends Controller implements Initializable {
     private Button addProblemButton;
 
     @FXML
-    private TextField answerField;
+    private TextArea answerArea;
 
     @FXML
     private Label descriptionProblem;
@@ -74,18 +74,18 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
+        if (chosenProblem.isEmpty() || answerArea.getText().isEmpty()) {
             errorLabel.setVisible(true);
         } else {
             errorLabel.setVisible(false);
             addComment(chosenProblem.getSelectedItem());
-            answerField.clear();
+            answerArea.clear();
             showCommentsOfProblem(chosenProblem.getSelectedItem());
         }
     }
 
     private void addComment(Problem problem) {
-        problem.addComment(new Comment(service.getCurrentUser(), answerField.getText()));
+        problem.addComment(new Comment(service.getCurrentUser(), answerArea.getText()));
     }
 
     private void showCommentsOfProblem(Problem problem) {
@@ -106,6 +106,7 @@ public class MainWindowController extends Controller implements Initializable {
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
+        answerArea.setWrapText(true);
         chosenCategory.selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> showListOfProblems(newValue));
         chosenProblem.selectedIndexProperty().addListener(
