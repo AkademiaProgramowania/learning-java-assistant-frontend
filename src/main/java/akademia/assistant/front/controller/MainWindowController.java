@@ -91,9 +91,10 @@ public class MainWindowController extends Controller implements Initializable {
     private void showCommentsOfProblem(Problem problem) {
         lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
         lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        lOADate.setCellValueFactory(new PropertyValueFactory<>("date"));
         ObservableList<TableFactory> data = FXCollections.observableArrayList();
         for (Comment comment : problem.getComments()) {
-            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer());
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
             data.add(tableFactory);
         }
         listOfAnswers.setItems(data);

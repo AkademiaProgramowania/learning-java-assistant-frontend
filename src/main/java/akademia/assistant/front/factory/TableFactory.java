@@ -3,10 +3,12 @@ package akademia.assistant.front.factory;
 public class TableFactory {
     private final String user;
     private final String comment;
+    private final String date;
 
-    public TableFactory(String user, String comment) {
+    public TableFactory(String user, String comment, String date) {
         this.user = user;
         this.comment = comment;
+        this.date = date;
     }
 
     public String getUser() {
@@ -15,5 +17,9 @@ public class TableFactory {
 
     public String getComment() {
         return comment;
+    }
+
+    public String getDate() {
+        return date;
     }
 }
