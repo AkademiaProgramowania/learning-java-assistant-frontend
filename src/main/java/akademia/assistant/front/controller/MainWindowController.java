@@ -16,6 +16,7 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
@@ -103,7 +104,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lOAAnswer.setCellFactory(new TextAreaCellFactory<>());
+        lOAAnswer.setCellFactory(new TextAreaCellFactory());
         chosenCategory = listOfCategoriesCb.getSelectionModel();
         chosenProblem = listOfProblemsCb.getSelectionModel();
         listOfCategoriesCb.setItems(categoriesObservableList);
@@ -134,7 +135,6 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showListOfComments(Number selectedProblem) {
-
         if (!chosenProblem.isEmpty() && chosenProblem.getSelectedItem().isWasAnswered()) {
             System.out.println("----"); // TODO: 19.06.2023 dokończyć
         } else {
@@ -143,10 +143,13 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
 
+/*
+* S - typ table View (w tej chwili TableFactory)
+* T - typ table collumn w tym przypadku String
+* */
+    private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> { // TODO: 19.06.2023 innego sposobu nie znalazłem
 
-    private static class TextAreaCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> { // TODO: 19.06.2023 innego sposobu nie znalazłem
-
-        @Override
+      /*  @Override
         public TableCell<S, T> call(TableColumn<S, T> param) {
             return new TableCell<>() {
                 private final TextArea textArea = new TextArea();
@@ -165,6 +168,27 @@ public class MainWindowController extends Controller implements Initializable {
                     }
                 }
             };
-        }
+        }*/
+
+    @Override
+    public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+        return new TableCell<>() {
+            private final TextArea textArea = new TextArea();
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                   setGraphic(null);
+                } else {
+                    textArea.setText(item);
+                    textArea.setWrapText(true);
+                    textArea.setEditable(false);
+                    setGraphic(textArea);
+                }
+            }
+        };
     }
+}
 }

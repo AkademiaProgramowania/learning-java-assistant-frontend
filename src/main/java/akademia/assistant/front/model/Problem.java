@@ -19,6 +19,10 @@ public class Problem {
         this.comments = comments;
     }
 
+  public boolean wasAnsweredFor(User user){
+
+  }
+
     public String getTitle() {
         return title;
     }
