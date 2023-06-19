@@ -80,7 +80,8 @@ public class MainWindowController extends Controller implements Initializable {
             errorLabel.setVisible(false);
             addComment(chosenProblem.getSelectedItem());
             answerArea.clear();
-            showCommentsOfProblem(chosenProblem.getSelectedItem());
+            chosenProblem.getSelectedItem().setWasAnswered(true);
+//            showCommentsOfProblem(chosenProblem.getSelectedItem());
         }
     }
 
@@ -113,6 +114,8 @@ public class MainWindowController extends Controller implements Initializable {
                 (observable, oldValue, newValue) -> showListOfProblems(newValue));
         chosenProblem.selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> showDescriptionOfProblem(newValue));
+        chosenProblem.selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> showListOfComments(newValue));
     }
 
     private void showDescriptionOfProblem(Number selectedProblem) {
@@ -130,9 +133,18 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(false);
     }
 
+    private void showListOfComments(Number selectedProblem) {
+
+        if (!chosenProblem.isEmpty() && chosenProblem.getSelectedItem().isWasAnswered()) {
+            System.out.println("----"); // TODO: 19.06.2023 dokończyć
+        } else {
+            System.out.println("QQQQ");
+        }
+    }
 
 
-    private static class TextAreaCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
+
+    private static class TextAreaCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> { // TODO: 19.06.2023 innego sposobu nie znalazłem
 
         @Override
         public TableCell<S, T> call(TableColumn<S, T> param) {

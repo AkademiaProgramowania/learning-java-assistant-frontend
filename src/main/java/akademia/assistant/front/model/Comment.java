@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Comment {
     private final User sender;
     private String answer = "";
-    private String date;
+    private final String date;
 
     public Comment(User sender, String answer) {
         this.sender = sender;
