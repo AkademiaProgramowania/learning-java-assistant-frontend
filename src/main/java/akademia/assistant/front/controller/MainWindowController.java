@@ -78,6 +78,8 @@ public class MainWindowController extends Controller implements Initializable {
             errorLabel.setVisible(false);
             addComment(chosenProblem.getSelectedItem());
             answerArea.clear();
+            listOfAnswers.setVisible(true);
+            showCommentsOfProblem(chosenProblem.getSelectedItem());
         }
     }
 
