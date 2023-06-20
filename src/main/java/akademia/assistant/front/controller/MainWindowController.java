@@ -78,25 +78,11 @@ public class MainWindowController extends Controller implements Initializable {
             errorLabel.setVisible(false);
             addComment(chosenProblem.getSelectedItem());
             answerArea.clear();
-            chosenProblem.getSelectedItem().setWasAnswered(true);
-//            showCommentsOfProblem(chosenProblem.getSelectedItem());
         }
     }
 
     private void addComment(Problem problem) {
         problem.addComment(new Comment(service.getCurrentUser(), answerArea.getText()));
-    }
-
-    private void showCommentsOfProblem(Problem problem) {
-        lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
-        lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
-        lOADate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        ObservableList<TableFactory> data = FXCollections.observableArrayList();
-        for (Comment comment : problem.getComments()) {
-            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
-            data.add(tableFactory);
-        }
-        listOfAnswers.setItems(data);
     }
 
     @Override
@@ -105,6 +91,7 @@ public class MainWindowController extends Controller implements Initializable {
         lOAAnswer.setCellFactory(new TextAreaCellFactory());
         chosenCategory = listOfCategoriesCb.getSelectionModel();
         chosenProblem = listOfProblemsCb.getSelectionModel();
+        listOfAnswers.setVisible(false);
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
@@ -132,41 +119,37 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(false);
     }
 
-    private void showListOfComments(Number selectedProblem) {
-        if (!chosenProblem.isEmpty() && chosenProblem.getSelectedItem().isWasAnswered()) {
-            System.out.println("----"); // TODO: 19.06.2023 dokończyć
-        } else {
-            System.out.println("QQQQ");
+    private void showListOfComments(Number newValue) {
+        try {
+            Problem selectedProblem = problemsObservableList.get(newValue.intValue());
+            if (userAnsweredQuestion(selectedProblem)) {
+                showCommentsOfProblem(selectedProblem);
+                listOfAnswers.setVisible(true);
+            } else {
+                listOfAnswers.setVisible(false);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            listOfAnswers.setVisible(false);
         }
     }
 
+    private boolean userAnsweredQuestion(Problem selectedProblem) {
+        return selectedProblem.wasAnsweredFor(service.getCurrentUser());
+    }
 
-/*
-* S - typ table View (w tej chwili TableFactory)
-* T - typ table collumn w tym przypadku String
-* */
-    private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> { // TODO: 19.06.2023 innego sposobu nie znalazłem
+    private void showCommentsOfProblem(Problem problem) {
+        lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
+        lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        lOADate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        ObservableList<TableFactory> data = FXCollections.observableArrayList();
+        for (Comment comment : problem.getComments()) {
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
+            data.add(tableFactory);
+        }
+        listOfAnswers.setItems(data);
+    }
 
-      /*  @Override
-        public TableCell<S, T> call(TableColumn<S, T> param) {
-            return new TableCell<>() {
-                private final TextArea textArea = new TextArea();
-
-                @Override
-                protected void updateItem(T item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        textArea.setText(item.toString());
-                        textArea.setWrapText(true);
-                        textArea.setEditable(false);
-                        setGraphic(textArea);
-                    }
-                }
-            };
-        }*/
+    private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
 
         @Override
         public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {

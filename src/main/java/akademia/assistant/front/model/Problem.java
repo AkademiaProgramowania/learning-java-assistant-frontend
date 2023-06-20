@@ -7,7 +7,6 @@ public class Problem {
     private String title = "";
     private String question = "";
     private List<Comment> comments;
-    private boolean wasAnswered; // TODO: 19.06.2023 chyba źle? sprawdzanie czy odpowiedzi udzielono, powinno znajdować się gdzie indziej?
 
     public Problem(String title, String question) {
         this(title,question,new ArrayList<>());
@@ -20,7 +19,12 @@ public class Problem {
     }
 
   public boolean wasAnsweredFor(User user){
-
+      for (Comment comment : comments) {
+          if (user.equals(comment.getSender())) {
+              return true;
+          }
+      }
+      return false;
   }
 
     public String getTitle() {
@@ -33,14 +37,6 @@ public class Problem {
 
     public List<Comment> getComments() {
         return comments;
-    }
-
-    public boolean isWasAnswered() {
-        return wasAnswered;
-    }
-
-    public void setWasAnswered(boolean wasAnswered) {
-        this.wasAnswered = wasAnswered;
     }
 
     public void addComment(Comment comment) {
