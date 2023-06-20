@@ -16,7 +16,6 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
@@ -51,10 +50,8 @@ public class MainWindowController extends Controller implements Initializable {
     @FXML
     private ChoiceBox<Problem> listOfProblemsCb;
 
-    private final String FXMLName = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
     private ObservableList<Problem> problemsObservableList;
-    private SingleSelectionModel<Category> chosenCategory;
     private SingleSelectionModel<Problem> chosenProblem;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
@@ -64,7 +61,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public String getFXMLName() {
-        return FXMLName;
+        return "main-window.fxml";
     }
 
     @FXML
@@ -104,6 +101,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SingleSelectionModel<Category> chosenCategory;
         lOAAnswer.setCellFactory(new TextAreaCellFactory());
         chosenCategory = listOfCategoriesCb.getSelectionModel();
         chosenProblem = listOfProblemsCb.getSelectionModel();
@@ -127,7 +125,7 @@ public class MainWindowController extends Controller implements Initializable {
             descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
         }
     }
-    
+
     private void showListOfProblems(Number selectedCategory) {
         problemsObservableList = FXCollections.observableList(categoriesObservableList.get(selectedCategory.intValue()).getProblems());
         listOfProblemsCb.setItems(problemsObservableList);
@@ -170,25 +168,25 @@ public class MainWindowController extends Controller implements Initializable {
             };
         }*/
 
-    @Override
-    public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
-        return new TableCell<>() {
-            private final TextArea textArea = new TextArea();
+        @Override
+        public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+            return new TableCell<>() {
+                private final TextArea textArea = new TextArea();
 
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                   setGraphic(null);
-                } else {
-                    textArea.setText(item);
-                    textArea.setWrapText(true);
-                    textArea.setEditable(false);
-                    setGraphic(textArea);
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        textArea.setText(item);
+                        textArea.setWrapText(true);
+                        textArea.setEditable(false);
+                        setGraphic(textArea);
+                    }
                 }
-            }
-        };
+            };
+        }
     }
-}
 }
