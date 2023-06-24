@@ -102,8 +102,8 @@ public class MainWindowController extends Controller implements Initializable {
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
         chosenProblem.selectedItemProperty().addListener(
                 (observable, oldProblem, newProblem) -> showDescriptionOfProblem(newProblem));
-        chosenProblem.selectedIndexProperty().addListener(
-                (observable, oldValue, newValue) -> showListOfComments(newValue));
+        chosenProblem.selectedItemProperty().addListener(
+                (observable, oldProblem, newProblem) -> showListOfComments(newProblem));
     }
 
     private void showListOfProblems(Category category) {
@@ -121,16 +121,15 @@ public class MainWindowController extends Controller implements Initializable {
         }
     }
 
-    private void showListOfComments(Number newValue) {
+    private void showListOfComments(Problem problem) {
         try {
-            Problem selectedProblem = problemsObservableList.get(newValue.intValue());
-            if (userAnsweredQuestion(selectedProblem)) {
-                showCommentsOfProblem(selectedProblem);
+            if (userAnsweredQuestion(problem)) {
+                showCommentsOfProblem(problem);
                 listOfAnswers.setVisible(true);
             } else {
                 listOfAnswers.setVisible(false);
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             listOfAnswers.setVisible(false);
         }
     }
