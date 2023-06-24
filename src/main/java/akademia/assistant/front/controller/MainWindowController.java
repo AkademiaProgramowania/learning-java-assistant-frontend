@@ -71,7 +71,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        if (chosenProblem.isEmpty() || answerArea.getText().isEmpty()) {
+        if (chosenProblem.isEmpty() || answerArea.getText().isBlank()) {
             errorLabel.setVisible(true);
         } else {
             errorLabel.setVisible(false);
