@@ -51,7 +51,6 @@ public class MainWindowController extends Controller implements Initializable {
     private ChoiceBox<Problem> listOfProblemsCb;
 
     private final ObservableList<Category> categoriesObservableList;
-    private ObservableList<Problem> problemsObservableList;
     private SingleSelectionModel<Problem> chosenProblem;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
@@ -107,7 +106,7 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showListOfProblems(Category category) {
-        problemsObservableList = FXCollections.observableList(category.getProblems());
+        ObservableList<Problem> problemsObservableList = FXCollections.observableList(category.getProblems());
         listOfProblemsCb.setItems(problemsObservableList);
         addProblemButton.setDisable(false);
     }
