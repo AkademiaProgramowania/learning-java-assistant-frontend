@@ -100,8 +100,8 @@ public class MainWindowController extends Controller implements Initializable {
         answerArea.setWrapText(true);
         chosenCategory.selectedItemProperty().addListener(
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
-        chosenProblem.selectedIndexProperty().addListener(
-                (observable, oldValue, newValue) -> showDescriptionOfProblem(newValue));
+        chosenProblem.selectedItemProperty().addListener(
+                (observable, oldProblem, newProblem) -> showDescriptionOfProblem(newProblem));
         chosenProblem.selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> showListOfComments(newValue));
     }
@@ -112,12 +112,12 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(false);
     }
 
-    private void showDescriptionOfProblem(Number selectedProblem) {
+    private void showDescriptionOfProblem(Problem problem) {
         if (chosenProblem.isEmpty()) {
             descriptionProblem.setVisible(false);
         } else {
             descriptionProblem.setVisible(true);
-            descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
+            descriptionProblem.setText(problem.getQuestion());
         }
     }
 
