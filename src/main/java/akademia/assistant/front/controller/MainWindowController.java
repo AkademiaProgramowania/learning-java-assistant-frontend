@@ -98,12 +98,18 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
-        chosenCategory.selectedIndexProperty().addListener(
-                (observable, oldValue, newValue) -> showListOfProblems(newValue));
+        chosenCategory.selectedItemProperty().addListener(
+                (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
         chosenProblem.selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> showDescriptionOfProblem(newValue));
         chosenProblem.selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> showListOfComments(newValue));
+    }
+
+    private void showListOfProblems(Category category) {
+        problemsObservableList = FXCollections.observableList(category.getProblems());
+        listOfProblemsCb.setItems(problemsObservableList);
+        addProblemButton.setDisable(false);
     }
 
     private void showDescriptionOfProblem(Number selectedProblem) {
@@ -113,12 +119,6 @@ public class MainWindowController extends Controller implements Initializable {
             descriptionProblem.setVisible(true);
             descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
         }
-    }
-
-    private void showListOfProblems(Number selectedCategory) {
-        problemsObservableList = FXCollections.observableList(categoriesObservableList.get(selectedCategory.intValue()).getProblems());
-        listOfProblemsCb.setItems(problemsObservableList);
-        addProblemButton.setDisable(false);
     }
 
     private void showListOfComments(Number newValue) {
