@@ -50,8 +50,9 @@ public class MainWindowController extends Controller implements Initializable {
     @FXML
     private ChoiceBox<Problem> listOfProblemsCb;
 
+    private final static String FXML_NAME = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
-    private SingleSelectionModel<Problem> chosenProblem;
+    private SingleSelectionModel<Problem> problemSelectionModel;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
@@ -60,7 +61,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public String getFXMLName() {
-        return "main-window.fxml";
+        return FXML_NAME;
     }
 
     @FXML
@@ -71,14 +72,14 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        if (chosenProblem.isEmpty() || answerArea.getText().isBlank()) {
+        if (problemSelectionModel.isEmpty() || answerArea.getText().isBlank()) {
             errorLabel.setVisible(true);
         } else {
             errorLabel.setVisible(false);
-            addComment(chosenProblem.getSelectedItem());
+            addComment(problemSelectionModel.getSelectedItem());
             answerArea.clear();
             listOfAnswers.setVisible(true);
-            showCommentsOfProblem(chosenProblem.getSelectedItem());
+            showCommentsOfProblem(problemSelectionModel.getSelectedItem());
         }
     }
 
@@ -88,20 +89,19 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SingleSelectionModel<Category> chosenCategory;
         lOAAnswer.setCellFactory(new TextAreaCellFactory());
-        chosenCategory = listOfCategoriesCb.getSelectionModel();
-        chosenProblem = listOfProblemsCb.getSelectionModel();
+        SingleSelectionModel<Category> categorySelectionModel = listOfCategoriesCb.getSelectionModel();
+        problemSelectionModel = listOfProblemsCb.getSelectionModel();
         listOfAnswers.setVisible(false);
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
-        chosenCategory.selectedItemProperty().addListener(
+        categorySelectionModel.selectedItemProperty().addListener(
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
-        chosenProblem.selectedItemProperty().addListener(
+        problemSelectionModel.selectedItemProperty().addListener(
                 (observable, oldProblem, newProblem) -> showDescriptionOfProblem(newProblem));
-        chosenProblem.selectedItemProperty().addListener(
+        problemSelectionModel.selectedItemProperty().addListener(
                 (observable, oldProblem, newProblem) -> showListOfComments(newProblem));
     }
 
