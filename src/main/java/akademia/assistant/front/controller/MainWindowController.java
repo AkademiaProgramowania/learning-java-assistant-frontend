@@ -16,6 +16,7 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
@@ -112,25 +113,32 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showDescriptionOfProblem(Problem problem) {
-        if (chosenProblem.isEmpty()) {
-            descriptionProblem.setVisible(false);
-        } else {
+        Optional<Problem> selectedProblem = getSelectedProblem();
+        if (selectedProblem.isPresent()) {
             descriptionProblem.setVisible(true);
             descriptionProblem.setText(problem.getQuestion());
+        } else {
+            descriptionProblem.setVisible(false);
         }
     }
 
     private void showListOfComments(Problem problem) {
-        try {
-            if (userAnsweredQuestion(problem)) {
-                showCommentsOfProblem(problem);
-                listOfAnswers.setVisible(true);
-            } else {
-                listOfAnswers.setVisible(false);
-            }
-        } catch (IndexOutOfBoundsException | NullPointerException e) {
+        Optional<Problem> selectedProblem = getSelectedProblem();
+        if (selectedProblem.isPresent() && userAnsweredQuestion(problem)) {
+            showCommentsOfProblem(problem);
+            listOfAnswers.setVisible(true);
+        } else {
             listOfAnswers.setVisible(false);
         }
+    }
+
+    private Optional<Problem> getSelectedProblem() {
+        SingleSelectionModel<Problem> problemSelectionModel = listOfProblemsCb.getSelectionModel();
+        Problem problem = problemSelectionModel.getSelectedItem();
+        if (problem == null || problemSelectionModel.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(problem);
     }
 
     private boolean userAnsweredQuestion(Problem selectedProblem) {
