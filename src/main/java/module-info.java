@@ -17,4 +17,6 @@ module assistant.front.learningjavaassistantfrontend {
     opens akademia.assistant.front.service to javafx.fxml;
     exports akademia.assistant.front.view;
     opens akademia.assistant.front.view to javafx.fxml;
+    exports akademia.assistant.front.factory;
+    opens akademia.assistant.front.factory to javafx.fxml;
 }

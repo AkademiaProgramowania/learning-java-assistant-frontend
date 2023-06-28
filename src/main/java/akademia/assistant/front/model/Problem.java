@@ -18,6 +18,15 @@ public class Problem {
         this.comments = comments;
     }
 
+  public boolean wasAnsweredFor(User user){
+      for (Comment comment : comments) {
+          if (user.equals(comment.getSender())) {
+              return true;
+          }
+      }
+      return false;
+  }
+
     public String getTitle() {
         return title;
     }
@@ -26,12 +35,12 @@ public class Problem {
         return question;
     }
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
-    }
-
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
     @Override

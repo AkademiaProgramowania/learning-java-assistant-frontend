@@ -2,7 +2,7 @@ package akademia.assistant.front.model;
 
 import java.util.List;
 
-public class Category {
+public final class Category {
     private String categoryName = "";
     private List<Problem> problems;
 

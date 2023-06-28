@@ -1,19 +1,22 @@
 package akademia.assistant.front.controller;
 
+import akademia.assistant.front.factory.TableFactory;
 import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends Controller implements Initializable {
@@ -22,13 +25,22 @@ public class MainWindowController extends Controller implements Initializable {
     private Button addProblemButton;
 
     @FXML
-    private TextField answerField;
+    private TextArea answerArea;
 
     @FXML
     private Label descriptionProblem;
 
     @FXML
-    private Label listOfAnswers;
+    private TableView<TableFactory> listOfAnswers;
+
+    @FXML
+    private TableColumn<TableFactory, String> lOAAnswer;
+
+    @FXML
+    private TableColumn<TableFactory, LocalDate> lOADate;
+
+    @FXML
+    private TableColumn<TableFactory, String> lOAUser;
 
     @FXML
     private Label errorLabel;
@@ -39,11 +51,9 @@ public class MainWindowController extends Controller implements Initializable {
     @FXML
     private ChoiceBox<Problem> listOfProblemsCb;
 
-    private final String FXMLName = "main-window.fxml";
+    private final static String FXML_NAME = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
-    private ObservableList<Problem> problemsObservableList;
-    private SingleSelectionModel<Category> chosenCategory;
-    private SingleSelectionModel<Problem> chosenProblem;
+    private SingleSelectionModel<Problem> problemSelectionModel;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
         super(service, viewFactory);
@@ -52,7 +62,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public String getFXMLName() {
-        return FXMLName;
+        return FXML_NAME;
     }
 
     @FXML
@@ -63,69 +73,111 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void confirmAnswer() {
-        if (chosenProblem.isEmpty() || answerField.getText().isEmpty()) {
+        if (problemSelectionModel.isEmpty() || answerArea.getText().isBlank()) {
             errorLabel.setVisible(true);
-            listOfAnswers.setText("");
         } else {
             errorLabel.setVisible(false);
-            chosenProblem.getSelectedItem().addComment(new Comment(service.getCurrentUser(), answerField.getText())); // TODO: 24.05.2023 w serwisie musiałem zmienić dostęp do metody getCurrentUser na public
-            listOfAnswers.setText(showCommentsOfProblem());
-            answerField.setText("");
+            addComment(problemSelectionModel.getSelectedItem());
+            answerArea.clear();
+            listOfAnswers.setVisible(true);
+            showCommentsOfProblem(problemSelectionModel.getSelectedItem());
         }
     }
 
-    private String showCommentsOfProblem() { // TODO: 26.05.2023 co w sytuacji odpowiedzi na pytanie? przy zmianie kategorii, lub pytania? lista odpowiedzi ma się czyścić? Program powinien zapamiętać na które pytania użytkownik odpowiedział i dożywotnio pokazywać okdpowiedzi ?
-        StringBuilder commentsOfProblem = new StringBuilder(); // TODO: 26.05.2023 zmienić rodzaj pola odpowiedzi? tak żeby to nie był StringBulider?
-        for (int i = 0; i < chosenProblem.getSelectedItem().getComments().size(); i++) {
-            Comment actualComment = chosenProblem.getSelectedItem().getComments().get(i);
-            commentsOfProblem
-                    .append("UŻYTKOWNIK: ").append(actualComment.getSender().getUsername())
-                    .append("    ODPOWIEDŹ : ").append(actualComment.getAnswer()).append("\n");
-        }
-        return commentsOfProblem.toString();
+    private void addComment(Problem problem) {
+        problem.addComment(new Comment(service.getCurrentUser(), answerArea.getText()));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        chosenCategory = listOfCategoriesCb.getSelectionModel();
-        chosenProblem = listOfProblemsCb.getSelectionModel();
+        lOAAnswer.setCellFactory(new TextAreaCellFactory());
+        SingleSelectionModel<Category> categorySelectionModel = listOfCategoriesCb.getSelectionModel();
+        problemSelectionModel = listOfProblemsCb.getSelectionModel();
+        listOfAnswers.setVisible(false);
         listOfCategoriesCb.setItems(categoriesObservableList);
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
-        chosenCategory.selectedIndexProperty().addListener(new CategoryListener());
-        chosenProblem.selectedIndexProperty().addListener(
-                (observable,oldValue, newValue) -> showProblem(newValue));
+        answerArea.setWrapText(true);
+        categorySelectionModel.selectedItemProperty().addListener(
+                (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
+        problemSelectionModel.selectedItemProperty().addListener(
+                (observable, oldProblem, newProblem) -> showDescriptionOfProblem(newProblem));
+        problemSelectionModel.selectedItemProperty().addListener(
+                (observable, oldProblem, newProblem) -> showListOfComments(newProblem));
     }
 
-    private void showProblem(Number selectedProblem) {
-        if (chosenProblem.isEmpty()) {
-            descriptionProblem.setText("");
+    private void showListOfProblems(Category category) {
+        ObservableList<Problem> problemsObservableList = FXCollections.observableList(category.getProblems());
+        listOfProblemsCb.setItems(problemsObservableList);
+        addProblemButton.setDisable(false);
+    }
+
+    private void showDescriptionOfProblem(Problem problem) {
+        Optional<Problem> selectedProblem = getSelectedProblem();
+        if (selectedProblem.isPresent()) {
+            descriptionProblem.setVisible(true);
+            descriptionProblem.setText(problem.getQuestion());
         } else {
-            descriptionProblem.setText(problemsObservableList.get(selectedProblem.intValue()).getQuestion());
+            descriptionProblem.setVisible(false);
         }
     }
 
-
-
-    class CategoryListener implements ChangeListener<Number> {// TODO: 25.05.2023 czy przenieść tą klasę do nowego pakietu?
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {// TODO: 26.05.2023 zmiana na Category?
-            problemsObservableList = FXCollections.observableList(categoriesObservableList.get(newValue.intValue()).getProblems());
-            listOfProblemsCb.setItems(problemsObservableList);
-            addProblemButton.setDisable(false);
+    private void showListOfComments(Problem problem) {
+        Optional<Problem> selectedProblem = getSelectedProblem();
+        if (selectedProblem.isPresent() && userAnsweredQuestion(problem)) {
+            showCommentsOfProblem(problem);
+            listOfAnswers.setVisible(true);
+        } else {
+            listOfAnswers.setVisible(false);
         }
     }
 
-    class ProblemListener implements ChangeListener<Number> {
+    private Optional<Problem> getSelectedProblem() {
+        SingleSelectionModel<Problem> problemSelectionModel = listOfProblemsCb.getSelectionModel();
+        Problem problem = problemSelectionModel.getSelectedItem();
+        if (problem == null || problemSelectionModel.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(problem);
+    }
+
+    private boolean userAnsweredQuestion(Problem selectedProblem) {
+        return selectedProblem.wasAnsweredFor(service.getCurrentUser());
+    }
+
+    private void showCommentsOfProblem(Problem problem) {
+        lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
+        lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        lOADate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        ObservableList<TableFactory> data = FXCollections.observableArrayList();
+        for (Comment comment : problem.getComments()) {
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
+            data.add(tableFactory);
+        }
+        listOfAnswers.setItems(data);
+    }
+
+    private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
 
         @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            if (chosenProblem.isEmpty()) {
-                descriptionProblem.setText("");
-            } else {
-                descriptionProblem.setText(problemsObservableList.get(newValue.intValue()).getQuestion());
-            }
+        public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+            return new TableCell<>() {
+                private final TextArea textArea = new TextArea();
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        textArea.setText(item);
+                        textArea.setWrapText(true);
+                        textArea.setEditable(false);
+                        setGraphic(textArea);
+                    }
+                }
+            };
         }
     }
 }
