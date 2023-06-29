@@ -6,16 +6,15 @@ import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
 import akademia.assistant.front.service.Service;
 import akademia.assistant.front.view.ViewFactory;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -37,7 +36,7 @@ public class MainWindowController extends Controller implements Initializable {
     private TableColumn<TableFactory, String> lOAAnswer;
 
     @FXML
-    private TableColumn<TableFactory, LocalDate> lOADate;
+    private TableColumn<TableFactory, String> lOADate;
 
     @FXML
     private TableColumn<TableFactory, String> lOAUser;
@@ -152,9 +151,9 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showCommentsOfProblem(Problem problem) {
-        lOAUser.setCellValueFactory(new PropertyValueFactory<>("user"));
-        lOAAnswer.setCellValueFactory(new PropertyValueFactory<>("comment"));
-        lOADate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        lOAUser.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getUser()));
+        lOAAnswer.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getComment()));
+        lOADate.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getDate()));
         ObservableList<TableFactory> data = FXCollections.observableArrayList();
         for (Comment comment : problem.getComments()) {
             TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
