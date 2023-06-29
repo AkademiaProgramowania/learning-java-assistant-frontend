@@ -53,6 +53,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     private final static String FXML_NAME = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
+    SingleSelectionModel<Category> categorySelectionModel;
     private SingleSelectionModel<Problem> problemSelectionModel;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
@@ -90,14 +91,18 @@ public class MainWindowController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lOAAnswer.setCellFactory(new TextAreaCellFactory());
-        SingleSelectionModel<Category> categorySelectionModel = listOfCategoriesCb.getSelectionModel();
+        listOfCategoriesCb.setItems(categoriesObservableList);
+        categorySelectionModel = listOfCategoriesCb.getSelectionModel();
         problemSelectionModel = listOfProblemsCb.getSelectionModel();
         listOfAnswers.setVisible(false);
-        listOfCategoriesCb.setItems(categoriesObservableList);
+        lOAAnswer.setCellFactory(new TextAreaCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
+        addListener();
+    }
+
+    private void addListener() {
         categorySelectionModel.selectedItemProperty().addListener(
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
         problemSelectionModel.selectedItemProperty().addListener(
