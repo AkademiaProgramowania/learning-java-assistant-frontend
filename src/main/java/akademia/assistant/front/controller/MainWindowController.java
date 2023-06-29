@@ -33,13 +33,16 @@ public class MainWindowController extends Controller implements Initializable {
     private TableView<TableFactory> listOfAnswers;
 
     @FXML
-    private TableColumn<TableFactory, String> lOAAnswer;
+    private TableColumn<TableFactory, String> lOAUser;
 
     @FXML
     private TableColumn<TableFactory, String> lOADate;
 
     @FXML
-    private TableColumn<TableFactory, String> lOAUser;
+    private TableColumn<TableFactory, String> lOAAnswer;
+
+    @FXML
+    private TableColumn<TableFactory, String> lOALikes;
 
     @FXML
     private Label errorLabel;
@@ -152,11 +155,12 @@ public class MainWindowController extends Controller implements Initializable {
 
     private void showCommentsOfProblem(Problem problem) {
         lOAUser.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getUser()));
-        lOAAnswer.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getComment()));
         lOADate.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getDate()));
+        lOAAnswer.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getComment()));
+        lOALikes.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getLikes()));
         ObservableList<TableFactory> data = FXCollections.observableArrayList();
         for (Comment comment : problem.getComments()) {
-            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getAnswer(), comment.getDate());
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getDate(), comment.getAnswer(), comment.getLikes());
             data.add(tableFactory);
         }
         listOfAnswers.setItems(data);

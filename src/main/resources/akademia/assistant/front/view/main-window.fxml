@@ -9,51 +9,57 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="872.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="288.0" layoutY="34.0" text="AKADEMIA PROGRAMOWANIA">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="20.0" layoutY="159.0" prefHeight="17.0" prefWidth="203.0" text="KATEGORIA">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="258.0" layoutY="159.0" text="ZAGADNIENIE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="20.0" layoutY="301.0" text="OPIS WYBRANEGO ZAGADNIENIA">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="answerArea" layoutX="472.0" layoutY="321.0" prefHeight="114.0" prefWidth="620.0" AnchorPane.rightAnchor="20.0" />
-      <Label layoutX="472.0" layoutY="301.0" text="ODPOWIEDŹ NA ZAGADNIENIE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="1024.0" layoutY="442.0" mnemonicParsing="false" onAction="#confirmAnswer" text="Zatwierdź" />
-      <Label layoutX="20.0" layoutY="454.0" text="LISTA ODPOWIEDZI NA ZAGADNIENIE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="listOfCategoriesCb" layoutX="20.0" layoutY="179.0" prefHeight="25.0" prefWidth="212.0" />
-      <ChoiceBox fx:id="listOfProblemsCb" layoutX="258.0" layoutY="179.0" prefHeight="25.0" prefWidth="834.0" />
-      <Label fx:id="descriptionProblem" alignment="TOP_LEFT" layoutX="20.0" layoutY="321.0" prefHeight="114.0" prefWidth="449.0" />
-      <Button fx:id="addProblemButton" layoutX="20.0" layoutY="216.0" mnemonicParsing="false" onAction="#onAddProblemButtonClick" prefHeight="25.0" prefWidth="212.0" text="Dodaj pytanie do wybranej kategorii" />
-      <Label fx:id="errorLabel" alignment="CENTER" layoutX="725.0" layoutY="446.0" prefHeight="17.0" prefWidth="290.0" text="Brak zaznaczonego zagadnienia lub brak odpowiedzi" />
-      <TableView fx:id="listOfAnswers" accessibleRole="TABLE_COLUMN" layoutX="20.0" layoutY="474.0" prefHeight="384.0" prefWidth="1072.0">
+<AnchorPane prefHeight="872.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/null"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <Label layoutX="288.0" layoutY="34.0" text="AKADEMIA PROGRAMOWANIA">
+        <font>
+            <Font name="System Bold" size="36.0"/>
+        </font>
+    </Label>
+    <Label layoutX="20.0" layoutY="159.0" prefHeight="17.0" prefWidth="203.0" text="KATEGORIA">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
+    <Label layoutX="258.0" layoutY="159.0" text="ZAGADNIENIE">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
+    <Label layoutX="20.0" layoutY="301.0" text="OPIS WYBRANEGO ZAGADNIENIA">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
+    <TextArea fx:id="answerArea" layoutX="472.0" layoutY="321.0" prefHeight="114.0" prefWidth="620.0"
+              AnchorPane.rightAnchor="20.0"/>
+    <Label layoutX="472.0" layoutY="301.0" text="ODPOWIEDŹ NA ZAGADNIENIE">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
+    <Button layoutX="1024.0" layoutY="442.0" mnemonicParsing="false" onAction="#confirmAnswer" text="Zatwierdź"/>
+    <Label layoutX="20.0" layoutY="454.0" text="LISTA ODPOWIEDZI NA ZAGADNIENIE">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
+    <ChoiceBox fx:id="listOfCategoriesCb" layoutX="20.0" layoutY="179.0" prefHeight="25.0" prefWidth="212.0"/>
+    <ChoiceBox fx:id="listOfProblemsCb" layoutX="258.0" layoutY="179.0" prefHeight="25.0" prefWidth="834.0"/>
+    <Label fx:id="descriptionProblem" alignment="TOP_LEFT" layoutX="20.0" layoutY="321.0" prefHeight="114.0"
+           prefWidth="449.0"/>
+    <Button fx:id="addProblemButton" layoutX="20.0" layoutY="216.0" mnemonicParsing="false"
+            onAction="#onAddProblemButtonClick" prefHeight="25.0" prefWidth="212.0"
+            text="Dodaj pytanie do wybranej kategorii"/>
+    <Label fx:id="errorLabel" alignment="CENTER" layoutX="725.0" layoutY="446.0" prefHeight="17.0" prefWidth="290.0"
+           text="Brak zaznaczonego zagadnienia lub brak odpowiedzi"/>
+    <TableView fx:id="listOfAnswers" accessibleRole="TABLE_COLUMN" layoutX="20.0" layoutY="474.0" prefHeight="384.0"
+               prefWidth="1072.0">
         <columns>
-          <TableColumn fx:id="lOAUser" prefWidth="123.0" text="Nazwa użytkownika" />
-          <TableColumn fx:id="lOADate" prefWidth="105.0" text="Data przesłania" />
-            <TableColumn fx:id="lOAAnswer" prefWidth="844.0" text="Odpowiedź" />
+            <TableColumn fx:id="lOAUser" prefWidth="123.0" text="Nazwa użytkownika"/>
+            <TableColumn fx:id="lOADate" prefWidth="105.0" text="Data przesłania"/>
+            <TableColumn fx:id="lOAAnswer" prefWidth="766.0" text="Odpowiedź"/>
+            <TableColumn fx:id="lOALikes" prefWidth="78.0" text="Polubienia"/>
         </columns>
-      </TableView>
-   </children>
+    </TableView>
 </AnchorPane>
