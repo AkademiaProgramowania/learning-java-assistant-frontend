@@ -106,9 +106,10 @@ public class MainWindowController extends Controller implements Initializable {
         categorySelectionModel.selectedItemProperty().addListener(
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
         problemSelectionModel.selectedItemProperty().addListener(
-                (observable, oldProblem, newProblem) -> showDescriptionOfProblem(newProblem));
-        problemSelectionModel.selectedItemProperty().addListener(
-                (observable, oldProblem, newProblem) -> showListOfComments(newProblem));
+                (observable, oldProblem, newProblem) -> {
+                    showDescriptionOfProblem(newProblem);
+                    showListOfComments(newProblem);
+                });
     }
 
     private void showListOfProblems(Category category) {
