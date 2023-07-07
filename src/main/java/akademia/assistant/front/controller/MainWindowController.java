@@ -46,6 +46,9 @@ public class MainWindowController extends Controller implements Initializable {
     private TableColumn<TableFactory, String> lOALikes;
 
     @FXML
+    private TableColumn<TableFactory, Button> lOALikeButtons;
+
+    @FXML
     private Label errorLabel;
 
     @FXML
@@ -99,6 +102,7 @@ public class MainWindowController extends Controller implements Initializable {
         problemSelectionModel = listOfProblemsCb.getSelectionModel();
         listOfAnswers.setVisible(false);
         lOAAnswer.setCellFactory(new TextAreaCellFactory());
+        lOALikeButtons.setCellFactory(new ButtonCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
@@ -202,6 +206,26 @@ public class MainWindowController extends Controller implements Initializable {
                         textArea.setWrapText(true);
                         textArea.setEditable(false);
                         setGraphic(textArea);
+                    }
+                }
+            };
+        }
+    }
+
+    private static class ButtonCellFactory implements Callback<TableColumn<TableFactory, Button>, TableCell<TableFactory, Button>> {
+        @Override
+        public TableCell<TableFactory, Button> call(TableColumn<TableFactory, Button> param) {
+            return new TableCell<>() {
+                private final Button likeButton = new Button();
+
+                @Override
+                protected void updateItem(Button item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(likeButton);
+                        likeButton.setDisable(false);
                     }
                 }
             };
