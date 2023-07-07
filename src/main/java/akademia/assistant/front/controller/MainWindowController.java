@@ -104,29 +104,14 @@ public class MainWindowController extends Controller implements Initializable {
         categorySelectionModel = listOfCategoriesCb.getSelectionModel();
         problemSelectionModel = listOfProblemsCb.getSelectionModel();
         listOfAnswers.setVisible(false);
+        lOAUser.setCellFactory(new CentreCellFactory());
+        lOADate.setCellFactory(new CentreCellFactory());
         lOAAnswer.setCellFactory(new TextAreaCellFactory());
         lOALikeButtons.setCellFactory(new ButtonCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
-        centerCellAlignment(lOAUser);
-        centerCellAlignment(lOADate);
         addListeners();
-    }
-
-    private void centerCellAlignment(TableColumn<TableFactory, String> column) {
-        column.setCellFactory(c -> new TableCell<>() { // CHECK: 07.07.2023 1.wyjaśnić, 2. Czy jestem w stanie zrobić to tak jak 'TextAreaCellFactory'?
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    setText(item);
-                    setAlignment(Pos.CENTER);
-                }
-            }
-        });
     }
 
     private void addListeners() {
@@ -189,6 +174,25 @@ public class MainWindowController extends Controller implements Initializable {
             data.add(tableFactory);
         }
         listOfAnswers.setItems(data);
+    }
+
+    private static class CentreCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
+
+        @Override
+        public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+            return new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER);
+                    }
+                }
+            };
+        }
     }
 
     private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
