@@ -13,9 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -217,15 +220,19 @@ public class MainWindowController extends Controller implements Initializable {
         public TableCell<TableFactory, Button> call(TableColumn<TableFactory, Button> param) {
             return new TableCell<>() {
                 private final Button likeButton = new Button();
+                private final Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/textures/like.png")));
+                private final ImageView imageView = new ImageView(image);
 
                 @Override
                 protected void updateItem(Button item, boolean empty) {
+                    likeButton.setMinSize(25, 25);
                     super.updateItem(item, empty);
                     if (empty) {
                         setGraphic(null);
                     } else {
-                        setGraphic(likeButton);
+                        likeButton.setGraphic(imageView);
                         likeButton.setDisable(false);
+                        setGraphic(likeButton);
                     }
                 }
             };
