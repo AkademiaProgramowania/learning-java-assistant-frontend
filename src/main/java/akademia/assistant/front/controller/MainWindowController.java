@@ -108,7 +108,7 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void centerCellAlignment(TableColumn<TableFactory, String> column) {
-        column.setCellFactory(c -> new TableCell<>() { // CHECK: 07.07.2023 wyjaśnić
+        column.setCellFactory(c -> new TableCell<>() { // CHECK: 07.07.2023 1.wyjaśnić, 2. Czy jestem w stanie zrobić to tak jak 'TextAreaCellFactory'?
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
