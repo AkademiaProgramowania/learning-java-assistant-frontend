@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
@@ -101,10 +102,27 @@ public class MainWindowController extends Controller implements Initializable {
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
-        addListener();
+        centerCellAlignment(lOAUser);
+        centerCellAlignment(lOADate);
+        addListeners();
     }
 
-    private void addListener() {
+    private void centerCellAlignment(TableColumn<TableFactory, String> column) {
+        column.setCellFactory(c -> new TableCell<>() { // CHECK: 07.07.2023 wyjaśnić
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+    }
+
+    private void addListeners() {
         categorySelectionModel.selectedItemProperty().addListener(
                 (observable, oldCategory, newCategory) -> showListOfProblems(newCategory));
         problemSelectionModel.selectedItemProperty().addListener(
