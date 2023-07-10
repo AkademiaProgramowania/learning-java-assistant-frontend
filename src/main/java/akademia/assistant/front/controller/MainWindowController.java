@@ -62,7 +62,7 @@ public class MainWindowController extends Controller implements Initializable {
 
     private final static String FXML_NAME = "main-window.fxml";
     private final ObservableList<Category> categoriesObservableList;
-    SingleSelectionModel<Category> categorySelectionModel;
+    private SingleSelectionModel<Category> categorySelectionModel;
     private SingleSelectionModel<Problem> problemSelectionModel;
 
     public MainWindowController(Service service, ViewFactory viewFactory) {
