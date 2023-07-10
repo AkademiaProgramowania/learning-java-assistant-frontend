@@ -1,6 +1,5 @@
 package akademia.assistant.front.controller;
 
-import akademia.assistant.front.factory.TableFactory;
 import akademia.assistant.front.model.Category;
 import akademia.assistant.front.model.Comment;
 import akademia.assistant.front.model.Problem;
@@ -34,22 +33,22 @@ public class MainWindowController extends Controller implements Initializable {
     private Label descriptionProblem;
 
     @FXML
-    private TableView<TableFactory> listOfAnswers;
+    private TableView<Comment> listOfAnswers;
 
     @FXML
-    private TableColumn<TableFactory, String> lOAUser;
+    private TableColumn<Comment, String> lOAUser;
 
     @FXML
-    private TableColumn<TableFactory, String> lOADate;
+    private TableColumn<Comment, String> lOADate;
 
     @FXML
-    private TableColumn<TableFactory, String> lOAAnswer;
+    private TableColumn<Comment, String> lOAAnswer;
 
     @FXML
-    private TableColumn<TableFactory, String> lOALikes;
+    private TableColumn<Comment, String> lOALikes;
 
     @FXML
-    private TableColumn<TableFactory, Button> lOALikeButtons;
+    private TableColumn<Comment, Button> lOALikeButtons;
 
     @FXML
     private Label errorLabel;
@@ -164,22 +163,18 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showCommentsOfProblem(Problem problem) {
-        lOAUser.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getUser()));
-        lOADate.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getDate()));
-        lOAAnswer.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getComment()));
-        lOALikes.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getLikes()));
-        ObservableList<TableFactory> data = FXCollections.observableArrayList();
-        for (Comment comment : problem.getComments()) {
-            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getDate(), comment.getAnswer(), comment.getLikes(), comment);
-            data.add(tableFactory);
-        }
+        lOAUser.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getSender().getUsername()));
+        lOADate.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getDate()));
+        lOAAnswer.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getAnswer()));
+        lOALikes.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getLikes()));
+        ObservableList<Comment> data = FXCollections.observableArrayList(problem.getComments());
         listOfAnswers.setItems(data);
     }
 
-    private static class CentreCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
+    private static class CentreCellFactory implements Callback<TableColumn<Comment, String>, TableCell<Comment, String>> {
 
         @Override
-        public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+        public TableCell<Comment, String> call(TableColumn<Comment, String> param) {
             return new TableCell<>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
@@ -195,10 +190,10 @@ public class MainWindowController extends Controller implements Initializable {
         }
     }
 
-    private static class TextAreaCellFactory implements Callback<TableColumn<TableFactory, String>, TableCell<TableFactory, String>> {
+    private static class TextAreaCellFactory implements Callback<TableColumn<Comment, String>, TableCell<Comment, String>> {
 
         @Override
-        public TableCell<TableFactory, String> call(TableColumn<TableFactory, String> param) {
+        public TableCell<Comment, String> call(TableColumn<Comment, String> param) {
             return new TableCell<>() {
                 private final TextArea textArea = new TextArea();
 
@@ -219,10 +214,10 @@ public class MainWindowController extends Controller implements Initializable {
         }
     }
 
-    private class ButtonCellFactory implements Callback<TableColumn<TableFactory, Button>, TableCell<TableFactory, Button>> {
+    private class ButtonCellFactory implements Callback<TableColumn<Comment, Button>, TableCell<Comment, Button>> {
 
         @Override
-        public TableCell<TableFactory, Button> call(TableColumn<TableFactory, Button> param) {
+        public TableCell<Comment, Button> call(TableColumn<Comment, Button> param) {
             return new TableCell<>() {
                 private final Button likeButton = new Button();
                 private final Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/textures/like.png")));
@@ -242,8 +237,8 @@ public class MainWindowController extends Controller implements Initializable {
                     }
                 }
                 private void rateComment() {
-                    TableFactory tableFactory = listOfAnswers.getItems().get(getIndex());
-                    tableFactory.increaseLikes();
+                    Comment comment = getTableView().getItems().get(getIndex());
+                    comment.increaseLikes();
                     listOfAnswers.refresh();
                 }
             };
