@@ -30,7 +30,7 @@ public class TableFactory {
     }
 
     public String getLikes() {
-        return likes;
+        return commentObject.getLikes();
     }
 
     public void increaseLikes() {

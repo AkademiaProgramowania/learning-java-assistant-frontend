@@ -244,6 +244,7 @@ public class MainWindowController extends Controller implements Initializable {
                 private void rateComment() {
                     TableFactory tableFactory = listOfAnswers.getItems().get(getIndex());
                     tableFactory.increaseLikes();
+                    listOfAnswers.refresh();
                 }
             };
         }
