@@ -33,7 +33,7 @@ public class MainWindowController extends Controller implements Initializable {
     private Label descriptionProblem;
 
     @FXML
-    private TableView<Comment> listOfAnswers;
+    private TableView<Comment> listOfAnswersTable;
 
     @FXML
     private TableColumn<Comment, String> userColumn;
@@ -88,7 +88,7 @@ public class MainWindowController extends Controller implements Initializable {
             errorLabel.setVisible(false);
             addComment(problemSelectionModel.getSelectedItem());
             answerArea.clear();
-            listOfAnswers.setVisible(true);
+            listOfAnswersTable.setVisible(true);
             showCommentsOfProblem(problemSelectionModel.getSelectedItem());
         }
     }
@@ -102,7 +102,7 @@ public class MainWindowController extends Controller implements Initializable {
         listOfCategoriesCb.setItems(categoriesObservableList);
         categorySelectionModel = listOfCategoriesCb.getSelectionModel();
         problemSelectionModel = listOfProblemsCb.getSelectionModel();
-        listOfAnswers.setVisible(false);
+        listOfAnswersTable.setVisible(false);
         userColumn.setCellFactory(new CentreCellFactory());
         dateColumn.setCellFactory(new CentreCellFactory());
         answerColumn.setCellFactory(new TextAreaCellFactory());
@@ -143,9 +143,9 @@ public class MainWindowController extends Controller implements Initializable {
         Optional<Problem> selectedProblem = getSelectedProblem();
         if (selectedProblem.isPresent() && userAnsweredQuestion(problem)) {
             showCommentsOfProblem(problem);
-            listOfAnswers.setVisible(true);
+            listOfAnswersTable.setVisible(true);
         } else {
-            listOfAnswers.setVisible(false);
+            listOfAnswersTable.setVisible(false);
         }
     }
 
@@ -168,7 +168,7 @@ public class MainWindowController extends Controller implements Initializable {
         answerColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getAnswer()));
         likesColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getLikes()));
         ObservableList<Comment> data = FXCollections.observableArrayList(problem.getComments());
-        listOfAnswers.setItems(data);
+        listOfAnswersTable.setItems(data);
     }
 
     private static class CentreCellFactory implements Callback<TableColumn<Comment, String>, TableCell<Comment, String>> {
