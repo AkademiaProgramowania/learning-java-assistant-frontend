@@ -170,7 +170,7 @@ public class MainWindowController extends Controller implements Initializable {
         lOALikes.setCellValueFactory(tableFactoryCell -> new SimpleStringProperty(tableFactoryCell.getValue().getLikes()));
         ObservableList<TableFactory> data = FXCollections.observableArrayList();
         for (Comment comment : problem.getComments()) {
-            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getDate(), comment.getAnswer(), comment.getLikes());
+            TableFactory tableFactory = new TableFactory(comment.getSender().getUsername(), comment.getDate(), comment.getAnswer(), comment.getLikes(), comment);
             data.add(tableFactory);
         }
         listOfAnswers.setItems(data);
@@ -219,7 +219,8 @@ public class MainWindowController extends Controller implements Initializable {
         }
     }
 
-    private static class ButtonCellFactory implements Callback<TableColumn<TableFactory, Button>, TableCell<TableFactory, Button>> {
+    private class ButtonCellFactory implements Callback<TableColumn<TableFactory, Button>, TableCell<TableFactory, Button>> {
+
         @Override
         public TableCell<TableFactory, Button> call(TableColumn<TableFactory, Button> param) {
             return new TableCell<>() {
@@ -229,8 +230,9 @@ public class MainWindowController extends Controller implements Initializable {
 
                 @Override
                 protected void updateItem(Button item, boolean empty) {
-                    likeButton.setMinSize(25, 25);
                     super.updateItem(item, empty);
+                    likeButton.setMinSize(25, 25);
+                    likeButton.setOnAction(event -> rateComment());
                     if (empty) {
                         setGraphic(null);
                     } else {
@@ -238,6 +240,10 @@ public class MainWindowController extends Controller implements Initializable {
                         likeButton.setDisable(false);
                         setGraphic(likeButton);
                     }
+                }
+                private void rateComment() {
+                    TableFactory tableFactory = listOfAnswers.getItems().get(getIndex());
+                    tableFactory.increaseLikes();
                 }
             };
         }
