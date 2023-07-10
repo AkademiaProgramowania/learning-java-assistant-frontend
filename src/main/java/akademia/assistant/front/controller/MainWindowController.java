@@ -106,6 +106,8 @@ public class MainWindowController extends Controller implements Initializable {
         userColumn.setCellFactory(new CentreCellFactory());
         dateColumn.setCellFactory(new CentreCellFactory());
         answerColumn.setCellFactory(new TextAreaCellFactory());
+        likesColumn.setSortType(TableColumn.SortType.DESCENDING);
+        listOfAnswersTable.getSortOrder().add(likesColumn);
         likeButtonsColumn.setCellFactory(new ButtonCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
@@ -240,7 +242,8 @@ public class MainWindowController extends Controller implements Initializable {
                 private void rateComment() {
                     Comment comment = getTableView().getItems().get(getIndex());
                     comment.increaseLikes();
-                    listOfAnswers.refresh();
+                    listOfAnswersTable.getSortOrder().add(likesColumn);
+                    listOfAnswersTable.refresh();
                 }
             };
         }
