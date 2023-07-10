@@ -51,8 +51,8 @@
         <columns>
             <TableColumn fx:id="lOAUser" prefWidth="123.0" text="Nazwa użytkownika" />
             <TableColumn fx:id="lOADate" prefWidth="105.0" text="Data przesłania" />
-            <TableColumn fx:id="lOAAnswer" prefWidth="780.0" text="Odpowiedź" />
-            <TableColumn fx:id="lOALikes" minWidth="0.0" prefWidth="17.0" />
+            <TableColumn fx:id="lOAAnswer" prefWidth="770.0" text="Odpowiedź" />
+            <TableColumn fx:id="lOALikes" minWidth="0.0" prefWidth="27.0" />
          <TableColumn fx:id="lOALikeButtons" prefWidth="29.0" />
         </columns>
     </TableView>
