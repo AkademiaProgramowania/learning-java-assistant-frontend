@@ -9,12 +9,12 @@ public class TableFactory {
     private final String likes;
     private final Comment commentObject;
 
-    public TableFactory(String user, String date, String comment, String likes, Comment comment1) {
+    public TableFactory(String user, String date, String comment, String likes, Comment commentObject) {
         this.user = user;
         this.date = date;
         this.comment = comment;
         this.likes = likes;
-        this.commentObject = comment1;
+        this.commentObject = commentObject;
     }
 
     public String getUser() {
