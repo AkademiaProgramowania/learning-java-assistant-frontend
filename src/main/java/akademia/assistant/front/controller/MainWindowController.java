@@ -57,8 +57,8 @@ public class MainWindowController extends Controller implements Initializable {
 
     @FXML
     void onAddProblemButtonClick() {
-        closeWindow();
         viewFactory.showProblemWindow(listOfCategoriesCb.getValue());
+        closeWindow();
     }
 
     @FXML

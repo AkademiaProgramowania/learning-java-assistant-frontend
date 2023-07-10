@@ -10,6 +10,7 @@ import akademia.assistant.front.service.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -53,6 +54,26 @@ public class ViewFactory {
         stage.show();
         stages.put(controller, stage);
     }
+
+    //todo aleksy fix
+/*    private void showAndWaitWindow(Controller controller) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFXMLName()));
+        fxmlLoader.setController(controller);
+        Parent parent;
+        try {
+            parent = fxmlLoader.load();
+        } catch(IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+        stages.put(controller, stage);
+    }*/
 
     public void closeWindow(Controller controller) {
         Stage stage = stages.remove(controller);

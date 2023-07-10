@@ -37,6 +37,12 @@ public class ProblemWindowController extends Controller {
         }
     }
 
+    @FXML
+    void onCancelButtonClick() {
+        closeWindow();
+        viewFactory.showMainWindow();
+    }
+
     @Override
     public String getFXMLName() {
         return FXMLName;

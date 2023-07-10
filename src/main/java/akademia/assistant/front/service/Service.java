@@ -9,6 +9,7 @@ import akademia.assistant.front.repository.Repository;
 import akademia.assistant.front.repository.RepositoryImpl;
 
 
+import java.io.File;
 import java.util.List;
 //todo refactor to two main services: for Authentication and for basic operations on Problem
 public class Service {
@@ -51,7 +52,10 @@ public class Service {
         addUserToUserList(newUser);
         currentUser = newUser;
         //todo zapis do pliku
-        objectToJson.convertObjectToJson(usersRepository);
+        objectToJson.convertObjectToJsonString(usersRepository);
+        File file = new File("users.json");
+        objectToJson.convertObjectToJson(usersRepository, file);
+
     }
 
 

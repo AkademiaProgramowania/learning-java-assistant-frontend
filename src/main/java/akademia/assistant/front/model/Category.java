@@ -3,6 +3,7 @@ package akademia.assistant.front.model;
 import akademia.assistant.front.exception.ProblemSubmitException;
 import akademia.assistant.front.jackson.ObjectToJson;
 
+import java.io.File;
 import java.util.List;
 
 public class Category {
@@ -29,7 +30,9 @@ public class Category {
             throw new ProblemSubmitException("Brakuje tytułu lub pytania. Spróbuj jeszcze raz.");
         }
         problems.add(problem);
-        objectToJson.convertObjectToJson(problems);
+        objectToJson.convertObjectToJsonString(problems);
+        File file = new File("problems.json");
+        objectToJson.convertObjectToJson(problems, file);
     }
 
     @Override

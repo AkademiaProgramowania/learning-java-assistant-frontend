@@ -2,6 +2,7 @@ package akademia.assistant.front.model;
 
 import akademia.assistant.front.jackson.ObjectToJson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class Problem {
 
     public void addComment(Comment comment) {
         comments.add(comment);
-        objectToJson.convertObjectToJson(comments);
+        objectToJson.convertObjectToJsonString(comments);
+        File file = new File("comments.json");
+        objectToJson.convertObjectToJson(comments, file);
     }
 
     public List<Comment> getComments() {
