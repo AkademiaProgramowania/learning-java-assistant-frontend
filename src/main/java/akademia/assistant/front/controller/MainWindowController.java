@@ -36,19 +36,19 @@ public class MainWindowController extends Controller implements Initializable {
     private TableView<Comment> listOfAnswers;
 
     @FXML
-    private TableColumn<Comment, String> lOAUser;
+    private TableColumn<Comment, String> userColumn;
 
     @FXML
-    private TableColumn<Comment, String> lOADate;
+    private TableColumn<Comment, String> dateColumn;
 
     @FXML
-    private TableColumn<Comment, String> lOAAnswer;
+    private TableColumn<Comment, String> answerColumn;
 
     @FXML
-    private TableColumn<Comment, String> lOALikes;
+    private TableColumn<Comment, String> likesColumn;
 
     @FXML
-    private TableColumn<Comment, Button> lOALikeButtons;
+    private TableColumn<Comment, Button> likeButtonsColumn;
 
     @FXML
     private Label errorLabel;
@@ -103,10 +103,10 @@ public class MainWindowController extends Controller implements Initializable {
         categorySelectionModel = listOfCategoriesCb.getSelectionModel();
         problemSelectionModel = listOfProblemsCb.getSelectionModel();
         listOfAnswers.setVisible(false);
-        lOAUser.setCellFactory(new CentreCellFactory());
-        lOADate.setCellFactory(new CentreCellFactory());
-        lOAAnswer.setCellFactory(new TextAreaCellFactory());
-        lOALikeButtons.setCellFactory(new ButtonCellFactory());
+        userColumn.setCellFactory(new CentreCellFactory());
+        dateColumn.setCellFactory(new CentreCellFactory());
+        answerColumn.setCellFactory(new TextAreaCellFactory());
+        likeButtonsColumn.setCellFactory(new ButtonCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
         answerArea.setWrapText(true);
@@ -163,10 +163,10 @@ public class MainWindowController extends Controller implements Initializable {
     }
 
     private void showCommentsOfProblem(Problem problem) {
-        lOAUser.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getSender().getUsername()));
-        lOADate.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getDate()));
-        lOAAnswer.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getAnswer()));
-        lOALikes.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getLikes()));
+        userColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getSender().getUsername()));
+        dateColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getDate()));
+        answerColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getAnswer()));
+        likesColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getLikes()));
         ObservableList<Comment> data = FXCollections.observableArrayList(problem.getComments());
         listOfAnswers.setItems(data);
     }
@@ -236,6 +236,7 @@ public class MainWindowController extends Controller implements Initializable {
                         setGraphic(likeButton);
                     }
                 }
+
                 private void rateComment() {
                     Comment comment = getTableView().getItems().get(getIndex());
                     comment.increaseLikes();
