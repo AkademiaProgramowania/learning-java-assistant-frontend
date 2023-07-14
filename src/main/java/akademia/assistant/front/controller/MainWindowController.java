@@ -224,23 +224,28 @@ public class MainWindowController extends Controller implements Initializable {
                 private final Button likeButton = new Button();
                 private final Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/textures/like.png")));
                 private final ImageView imageView = new ImageView(image);
+                private Comment comment;
 
                 @Override
                 protected void updateItem(Button item, boolean empty) {
                     super.updateItem(item, empty);
                     likeButton.setMinSize(25, 25);
-                    likeButton.setOnAction(event -> rateComment());
                     if (empty) {
                         setGraphic(null);
                     } else {
-                        likeButton.setGraphic(imageView);
-                        likeButton.setDisable(false);
-                        setGraphic(likeButton);
+                        comment = getTableView().getItems().get(getIndex());
+                        if (comment.isOwnComment(service.getCurrentUser())) {// CHECK: 14.07.2023 jakiś pomysł na połączenie zagnieżdżonych warunków?
+                            setGraphic(null);
+                        } else {
+                            likeButton.setGraphic(imageView);
+                            likeButton.setDisable(false);
+                            likeButton.setOnAction(event -> rateComment());
+                            setGraphic(likeButton);
+                        }
                     }
                 }
 
                 private void rateComment() {
-                    Comment comment = getTableView().getItems().get(getIndex());
                     comment.increaseLikes();
                     listOfAnswersTable.getSortOrder().add(likesColumn);
                     listOfAnswersTable.refresh();

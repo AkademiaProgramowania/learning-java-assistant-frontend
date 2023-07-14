@@ -39,4 +39,8 @@ public class Comment {
             likes--;
         }
     }
+
+    public boolean isOwnComment(User user) {
+        return sender.getUsername().equals(user.getUsername());
+    }
 }
