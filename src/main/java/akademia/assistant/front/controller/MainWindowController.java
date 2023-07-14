@@ -242,7 +242,6 @@ public class MainWindowController extends Controller implements Initializable {
                             setGraphic(null);
                         } else {
                             likeButton.setGraphic(imageView);
-                            likeButton.setDisable(false);
                             likeButton.setOnAction(event -> rateComment());
                             setGraphic(likeButton);
                         }
