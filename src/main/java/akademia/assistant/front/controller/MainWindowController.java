@@ -107,7 +107,6 @@ public class MainWindowController extends Controller implements Initializable {
         dateColumn.setCellFactory(new CentreCellFactory());
         answerColumn.setCellFactory(new TextAreaCellFactory());
         likesColumn.setSortType(TableColumn.SortType.DESCENDING);
-        listOfAnswersTable.getSortOrder().add(likesColumn);
         likeButtonsColumn.setCellFactory(new ButtonCellFactory());
         addProblemButton.setDisable(true);
         errorLabel.setVisible(false);
@@ -171,6 +170,11 @@ public class MainWindowController extends Controller implements Initializable {
         likesColumn.setCellValueFactory(commentCell -> new SimpleStringProperty(commentCell.getValue().getLikes()));
         ObservableList<Comment> data = FXCollections.observableArrayList(problem.getComments());
         listOfAnswersTable.setItems(data);
+        sortTableByLikes();
+    }
+    private void sortTableByLikes() {
+        listOfAnswersTable.getSortOrder().add(likesColumn);
+        listOfAnswersTable.refresh();
     }
 
     private static class CentreCellFactory implements Callback<TableColumn<Comment, String>, TableCell<Comment, String>> {
@@ -247,8 +251,7 @@ public class MainWindowController extends Controller implements Initializable {
 
                 private void rateComment() {
                     comment.increaseLikes();
-                    listOfAnswersTable.getSortOrder().add(likesColumn);
-                    listOfAnswersTable.refresh();
+                    sortTableByLikes();
                 }
             };
         }
