@@ -249,7 +249,11 @@ public class MainWindowController extends Controller implements Initializable {
                 }
 
                 private void rateComment() {
-                    comment.increaseLikes();
+                    if (comment.userGiveLike(service.getCurrentUser())) {
+                        comment.decreaseLikes();
+                    } else {
+                        comment.increaseLikes();
+                    }
                     sortTableByLikes();
                 }
             };
