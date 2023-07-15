@@ -43,7 +43,7 @@ public class Comment {
         }
     }
 
-    public boolean userGiveLike(User user) {
+    public boolean userGaveLike(User user) {
         for (User u : usersWhoLiked) {
             if (u == user) {
                 usersWhoLiked.remove(user);
