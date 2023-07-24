@@ -172,6 +172,7 @@ public class MainWindowController extends Controller implements Initializable {
         listOfAnswersTable.setItems(data);
         sortTableByLikes();
     }
+
     private void sortTableByLikes() {
         listOfAnswersTable.getSortOrder().add(likesColumn);
         listOfAnswersTable.refresh();
@@ -236,16 +237,16 @@ public class MainWindowController extends Controller implements Initializable {
                     likeButton.setMinSize(25, 25);
                     if (empty) {
                         setGraphic(null);
-                    } else {
-                        comment = getTableView().getItems().get(getIndex());
-                        if (comment.isOwnComment(service.getCurrentUser())) {// CHECK: 14.07.2023 jakiś pomysł na połączenie zagnieżdżonych warunków?
-                            setGraphic(null);
-                        } else {
-                            likeButton.setGraphic(imageView);
-                            likeButton.setOnAction(event -> rateComment());
-                            setGraphic(likeButton);
-                        }
+                        return;
                     }
+                    comment = getTableView().getItems().get(getIndex());
+                    if (comment.isOwnComment(service.getCurrentUser())) {
+                        setGraphic(null);
+                        return;
+                    }
+                    likeButton.setGraphic(imageView);
+                    likeButton.setOnAction(event -> rateComment());
+                    setGraphic(likeButton);
                 }
 
                 private void rateComment() {

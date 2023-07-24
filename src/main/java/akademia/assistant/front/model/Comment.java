@@ -45,7 +45,7 @@ public class Comment {
 
     public boolean userGaveLike(User user) {
         for (User u : usersWhoLiked) {
-            if (u == user) {
+            if (u.equals(user)) {
                 usersWhoLiked.remove(user);
                 return true;
             }
